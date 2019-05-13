@@ -7,14 +7,17 @@ package com.mycompany.driveeye;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  *
  * @author Sallam
  */
-@SpringBootApplication  
- public class DriveEyeApplication {  
-   public static void main(String[] args) throws Exception {  
-     SpringApplication.run(DriveEyeApplication.class, args);  
-   }  
- }  
+@SpringBootApplication
+@EnableJpaAuditing
+public class DriveEyeApplication {
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(DriveEyeApplication.class, args);
+    }
+}
