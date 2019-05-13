@@ -6,7 +6,9 @@
 package com.mycompany.driveeye;
 
 import com.mycompany.dao.UserDao;
+import com.mycompany.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,20 +20,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestClass {
 
-//    @Autowired
-//    private UserDao userDao;
-//
-//    public void setUserDao(UserDao userDao) {
-//        this.userDao = userDao;
-//    }
-//    
-//    @GetMapping("/get")
-//    public User getUser() {
-//        User user = new User(6556, "asdnasmhdj,asjd");
-//        return user;
-//    }
-    @RequestMapping("/getUser")
-    public String getUser() {
+    @Autowired
+    private UserDao userDao;
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+    
+    @GetMapping("/getUser")
+    public User getUser() {
+        return userDao.findById(1).get();
+    }
+    @RequestMapping("/get")
+    public String get() {
+        User user = new User();
+        user.setEmail("asdas");
+        user.setFirstName("sada");
+        user.setLastName("asdas");
+        userDao.save(user);
         return "sdfsdf";
     }
 
