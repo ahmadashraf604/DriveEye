@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByBirthdate", query = "SELECT u FROM User u WHERE u.birthdate = :birthdate")
     , @NamedQuery(name = "User.findByLevel", query = "SELECT u FROM User u WHERE u.level = :level")
+    , @NamedQuery(name = "User.login", query = "SELECT u FROM User u where u.email = :email and u.password = :password")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User implements Serializable {
 
@@ -54,9 +55,11 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
     @Size(max = 45)
+    @NotNull
     @Column(name = "first_name")
     private String firstName;
     @Size(max = 45)
+    @NotNull
     @Column(name = "last_name")
     private String lastName;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -65,12 +68,14 @@ public class User implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
+    @NotNull
     @Column(name = "birthdate")
     @Temporal(TemporalType.DATE)
     private Date birthdate;
     @Column(name = "level")
     private Integer level;
     @Size(max = 45)
+    @NotNull
     @Column(name = "password")
     private String password;
     @Lob
