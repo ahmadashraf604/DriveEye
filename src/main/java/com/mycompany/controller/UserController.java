@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.driveeye;
+package com.mycompany.controller;
 
 import com.mycompany.dao.UserDao;
 import com.mycompany.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Ashraf_R
  */
 @RestController
-public class TestClass {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     private UserDao userDao;
@@ -27,18 +29,23 @@ public class TestClass {
         this.userDao = userDao;
     }
     
-    @GetMapping("/getUser")
-    public User getUser() {
-        return userDao.findById(1).get();
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable int id) {
+        return userDao.findById(id).get();
     }
-    @RequestMapping("/get")
-    public String get() {
-        User user = new User();
-        user.setEmail("asdas");
-        user.setFirstName("sada");
-        user.setLastName("asdas");
-        userDao.save(user);
-        return "sdfsdf";
+    @GetMapping("/get")
+    public Iterable<User> getUsers() {
+        return userDao.findAll();
     }
+    
+//    @RequestMapping("/get")
+//    public String get() {
+//        User user = new User();
+//        user.setEmail("asdas");
+//        user.setFirstName("sada");
+//        user.setLastName("asdas");
+//        userDao.save(user);
+//        return "sdfsdf";
+//    }
 
 }
