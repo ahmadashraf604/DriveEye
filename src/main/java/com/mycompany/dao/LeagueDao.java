@@ -5,6 +5,7 @@
  */
 package com.mycompany.dao;
 
+import com.mycompany.bean.League;
 import com.mycompany.bean.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author Ashraf_R
  */
 @Repository
-public interface LeagueDao extends CrudRepository<User, Integer> {
+public interface LeagueDao extends CrudRepository<League, Integer> {
     
 }

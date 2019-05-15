@@ -8,8 +8,11 @@ package com.mycompany.controller;
 import com.mycompany.dao.UserDao;
 import com.mycompany.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,18 +30,28 @@ public class UserController {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-    
+
     @GetMapping("/{id}")
-    public User getUser(@PathVariable int id) {
-        return userDao.findById(id).get();
+    public Response<?> getUser(@PathVariable int id) {
+        if (userDao.existsById(id)) {
+            return new Response<>(true, userDao.findById(id).get());
+        } else {
+            return new Response<>(false, "user not found");
+        }
     }
+
     @GetMapping("/get")
-    public Iterable<User> getUsers() {
-        return userDao.findAll();
+    public Response<?> getUsers() {
+        Iterable<User> users = userDao.findAll();
+        if (users.iterator().hasNext()) {
+            return new Response<>(true, users);
+        }else{
+            return new Response<>(false, "users not found");
+        }
     }
-    
-//    @RequestMapping("/get")
-//    public String get() {
+
+//    @PostMapping("/login")
+//    public String login() {
 //        User user = new User();
 //        user.setEmail("asdas");
 //        user.setFirstName("sada");
@@ -46,5 +59,4 @@ public class UserController {
 //        userDao.save(user);
 //        return "sdfsdf";
 //    }
-
 }

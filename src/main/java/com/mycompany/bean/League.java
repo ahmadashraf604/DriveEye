@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -23,6 +24,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.context.annotation.Lazy;
 
 /**
  *
@@ -53,8 +57,10 @@ public class League implements Serializable {
     private String code;
     @Column(name = "user_count")
     private Integer userCount;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
-    private Collection<UserLeague> userLeagueCollection;
+    private transient Collection<UserLeague> userLeagueCollection;
+    @JsonIgnore
     @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private User ownerId;
@@ -139,5 +145,5 @@ public class League implements Serializable {
     public String toString() {
         return "com.mycompany.bean.League[ leagueId=" + leagueId + " ]";
     }
-    
+
 }
