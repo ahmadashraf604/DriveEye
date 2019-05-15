@@ -39,6 +39,7 @@ public class UserController {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+        System.out.println("hahahahaha");
     }
 
     @GetMapping("/{id}")
