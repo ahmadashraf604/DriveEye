@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Lazy;
  * @author Ashraf_R
  */
 @Entity
-@Table(name = "league")
+@Table(name = "league", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "League.findAll", query = "SELECT l FROM League l")
