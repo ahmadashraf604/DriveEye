@@ -5,7 +5,8 @@
  */
 package com.mycompany.dao;
 
-import com.mycompany.bean.User;
+import com.mycompany.bean.Car;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Repository;
  * @author Ashraf_R
  */
 @Repository
-public interface badgeDao extends CrudRepository<User, Integer> {
+public interface CarDao extends CrudRepository<Car,Integer> {
+       @Query(value = "update Car c set c.brand = :brand,c.model = :model  where id = :carId")
+    public Car updateCar(Car car);
     
 }
