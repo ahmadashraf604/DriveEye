@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author Ashraf_R
  */
 @Repository
-public interface seasonDao extends CrudRepository<User, Integer> {
+public interface SeasonDao extends CrudRepository<User, Integer> {
     
 }
