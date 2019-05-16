@@ -71,7 +71,6 @@ public class UserLeagueContoller {
             league.setLeague(l.getLeague());
             league.setScore(l.getScore());
             league.setUserLeaguePK(l.getUserLeaguePK());
-            
             userLeagues.add(league);
 
         }
