@@ -34,7 +34,7 @@ public class UserLeagueContoller {
     @Autowired
     UserController userController;
 
-    @GetMapping("subscribe")
+    @GetMapping("join")
     public Response<?> subscribe(@Param String leagueCode, @Param int userID) {
         User user = userController.existUserById(userID);
         if (user != null) {
@@ -51,33 +51,36 @@ public class UserLeagueContoller {
                     userLeagueDao.save(userLeague);
                     return new Response<>(true, "add sucessfully");
                 } else {
-                    return new Response<>(false, "user aready exit in this league");
+                    return new Response<>(false, "user aready subscribed ");
                 }
             } else {
-                return new Response<>(false, "no such league by this code " + leagueCode);
+                return new Response<>(false, "no such league with code : " + leagueCode);
             }
         } else {
             return new Response<>(false, "user is null  " + userID);
         }
-
     }
 
     @GetMapping("subscribed")
     public Response<?> getSubscrubesLeague(@Param int user_id) {
-        List<UserLeague> leagues = userLeagueDao.getSubscribedLeahue(user_id);
-        List<UserLeague> userLeagues = new ArrayList<>();
-        for (UserLeague l : leagues) {
-            UserLeague league = new UserLeague();
-            league.setLeague(l.getLeague());
-            league.setScore(l.getScore());
-            league.setUserLeaguePK(l.getUserLeaguePK());
-            userLeagues.add(league);
+        List<UserLeague> leagues = userLeagueDao.getSubscribedLeague(user_id);
+        if (leagues.size() > 0) {
 
+            List<UserLeague> userLeagues = new ArrayList<>();
+            for (UserLeague l : leagues) {
+                UserLeague league = new UserLeague();
+                league.setLeague(l.getLeague());
+                league.setScore(l.getScore());
+                league.setUserLeaguePK(l.getUserLeaguePK());
+                userLeagues.add(league);
+            }
+
+            System.out.println("league size : " + leagues.size());
+            return new Response<>(true, userLeagues);
+
+        } else {
+            return new Response<>(true, "now subsscribed league");
         }
-
-        System.out.println("league size : " + leagues.size());
-        return new Response<>(true, userLeagues);
-//        return new Response<>(true,user_id);
 
     }
 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\City.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\UserSeason.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\UserController.java
@@ -8,6 +7,7 @@ C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\utill\ErrorRep
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dao\UserLeagueDao.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Season.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dao\CarDao.java
+C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\utils\Constants.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\UserSeasonPK.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\CarController.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Trip.java
@@ -25,6 +25,7 @@ C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\Coa
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\CityContoller.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dao\SeasonDao.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dao\UserDao.java
+C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\TripController.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Car.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\UserLeagueContoller.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Badge.java
@@ -32,71 +33,3 @@ C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\League.ja
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Coaching.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\User.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\UserLeaguePK.java
-=======
-<<<<<<< HEAD
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\UserLeague.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\League.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\controller\CarController.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\CarDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\UserLeaguePK.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\driveeye\DriveEyeApplication.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\SeasonDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\utill\Response.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\CoachingDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\controller\TripController.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\Coaching.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\UserSeason.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\UserDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\Badge.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonBadgePK.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\Car.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonBadge.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\controller\CoachingContoller.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\utill\ErrorReport.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\BadgeDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\User.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\controller\UserController.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\driveeye\ServletInitializer.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\City.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonPK.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\TripDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\controller\CityContoller.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\CityDao.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\controller\LeagueController.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\Season.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\bean\Trip.java
-E:\ITI\37- Final project\DriveEye\src\main\java\com\mycompany\dao\LeagueDao.java
-=======
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\Trip.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonBadgePK.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\controller\UserController.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\LeagueDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\TripDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\driveeye\ServletInitializer.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonPK.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\CoachingDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\BadgeDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\controller\CityContoller.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\City.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\controller\LeagueController.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\UserSeason.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\UserDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonBadge.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\User.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\Car.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\Coaching.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\Badge.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\League.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\CarDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\controller\CarController.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\controller\CoachingContoller.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\utill\ErrorReport.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\UserLeague.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\UserLeaguePK.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\bean\Season.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\driveeye\DriveEyeApplication.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\utill\Response.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\SeasonDao.java
-C:\Users\Sallam\Desktop\ITI Final Project\DriveEye\src\main\java\com\mycompany\dao\CityDao.java
->>>>>>> 3df369b3abf52d07065de5b41e48f86696ee37b1
->>>>>>> abfada5c7445f49e2111735c2e4b150fef5a22bf

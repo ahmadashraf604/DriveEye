@@ -24,5 +24,5 @@ public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK>{
     UserLeague findUserLeague(@Param("userId") int userId,@Param("leagueId") int leagueId);
     
     @Query(name = "UserLeague.findByUserId")
-    public List<UserLeague> getSubscribedLeahue(@Param("userId")int userID);
+    public List<UserLeague> getSubscribedLeague(@Param("userId")int userID);
 }
