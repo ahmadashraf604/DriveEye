@@ -9,20 +9,16 @@ import com.mycompany.utill.Response;
 import com.mycompany.utill.ErrorReport;
 import com.mycompany.dao.UserDao;
 import com.mycompany.bean.User;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
+    
+    @Autowired
+    private CityContoller cityContoller;
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -76,13 +75,18 @@ public class UserController {
             @Param("password") String password,
             @Param("firstName") String firstName,
             @Param("lastName") String lastName,
-            @Param("birthdate") Date birthdate) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @Param("birthdate") Date birthdate,
+            @Param("cityId") int cityId) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        birthdate.setHours(22);
         user.setBirthdate(birthdate);
+        user.setLevel(0);
+        user.setCityId(cityContoller.findCityById(cityId));
         try {
             User savedUser = userDao.save(user);
             return new Response<>(true, savedUser);
@@ -93,7 +97,19 @@ public class UserController {
                 report.add(new ErrorReport(cv.getPropertyPath().toString(), cv.getMessage()));
             }
             return new Response<>(false, report);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            if (e.getLocalizedMessage().contains("email_UNIQUE")) {
+                return new Response<>(false, new ErrorReport("email", "email must be uniqe"));
+            }
+            return new Response<>(false, new ErrorReport("un none", e.getLocalizedMessage()));
         }
 
+    }
+    
+    public User existUserById(int userId) {
+        if (userDao.existsById(userId)) {
+            return userDao.findById(userId).get();
+        }
+        return null;
     }
 }
