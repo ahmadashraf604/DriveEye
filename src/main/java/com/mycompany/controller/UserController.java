@@ -97,4 +97,10 @@ public class UserController {
         }
 
     }
+    public User existUserById(int userId) {
+        if (userDao.existsById(userId)) {
+            return userDao.findById(userId).get();
+        }
+        return null;
+    }
 }
