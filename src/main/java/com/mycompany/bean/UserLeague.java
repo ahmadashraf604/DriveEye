@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -26,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "UserLeague.findAll", query = "SELECT u FROM UserLeague u")
     , @NamedQuery(name = "UserLeague.findByUserLeagueId", query = "SELECT u FROM UserLeague u WHERE u.userLeaguePK.userLeagueId = :userLeagueId")
+    , @NamedQuery(name = "UserLeague.findByUserIdAndLeagueId", query = "SELECT u FROM UserLeague u WHERE u.userLeaguePK.userId = :userId AND u.userLeaguePK.leagueId = :leagueId")
     , @NamedQuery(name = "UserLeague.findByUserId", query = "SELECT u FROM UserLeague u WHERE u.userLeaguePK.userId = :userId")
     , @NamedQuery(name = "UserLeague.findByLeagueId", query = "SELECT u FROM UserLeague u WHERE u.userLeaguePK.leagueId = :leagueId")
     , @NamedQuery(name = "UserLeague.findByScore", query = "SELECT u FROM UserLeague u WHERE u.score = :score")})
@@ -39,6 +41,7 @@ public class UserLeague implements Serializable {
     @JoinColumn(name = "league_id", referencedColumnName = "league_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private League league;
+//    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private User user;

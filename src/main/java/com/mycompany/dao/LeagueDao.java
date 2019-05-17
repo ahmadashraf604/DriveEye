@@ -6,8 +6,9 @@
 package com.mycompany.dao;
 
 import com.mycompany.bean.League;
-import com.mycompany.bean.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,5 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface LeagueDao extends CrudRepository<League, Integer> {
-    
+
+    @Query(name = "League.findByCode")
+    public League findLeagueByCode(@Param("code") String code);
+
 }

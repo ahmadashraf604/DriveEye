@@ -1,5 +1,7 @@
 com\mycompany\dao\CityDao.class
+utils\Constants.class
 com\mycompany\bean\UserSeasonBadgePK.class
+com\mycompany\dao\UserLeagueDao.class
 com\mycompany\dao\TripDao.class
 com\mycompany\bean\Badge.class
 com\mycompany\controller\CityContoller.class
@@ -7,6 +9,7 @@ com\mycompany\utill\ErrorReport.class
 com\mycompany\utill\Response.class
 com\mycompany\controller\UserController.class
 com\mycompany\bean\UserLeague.class
+com\mycompany\controller\UserLeagueContoller.class
 com\mycompany\bean\UserSeasonBadge.class
 com\mycompany\bean\League.class
 com\mycompany\dao\LeagueDao.class
@@ -17,10 +20,7 @@ com\mycompany\bean\Trip.class
 com\mycompany\controller\CoachingContoller.class
 com\mycompany\dao\CarDao.class
 com\mycompany\bean\UserSeasonPK.class
-<<<<<<< HEAD
 com\mycompany\controller\TripController.class
-=======
->>>>>>> 3df369b3abf52d07065de5b41e48f86696ee37b1
 com\mycompany\dao\SeasonDao.class
 com\mycompany\bean\UserLeaguePK.class
 com\mycompany\controller\LeagueController.class
