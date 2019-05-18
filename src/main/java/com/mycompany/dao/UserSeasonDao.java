@@ -5,16 +5,16 @@
  */
 package com.mycompany.dao;
 
-import com.mycompany.bean.Season;
 import com.mycompany.bean.User;
+import com.mycompany.bean.UserSeason;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Ashraf_R
+ * @author Tahoon
  */
 @Repository
-public interface SeasonDao extends CrudRepository<Season,Integer> {
+public interface UserSeasonDao extends CrudRepository<UserSeason, Integer> { 
     
 }

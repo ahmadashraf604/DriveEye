@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -82,12 +83,19 @@ public class User implements Serializable {
     @Column(name = "image")
     private byte[] image;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    
+    
     private Collection<UserLeague> userLeagueCollection;
     @OneToMany(mappedBy = "userId")
+    
+    
     private Collection<Trip> tripCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    
     private Collection<UserSeason> userSeasonCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
+    
+    
     private Collection<League> leagueCollection;
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
     @ManyToOne
