@@ -5,7 +5,6 @@
  */
 package com.mycompany.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -47,7 +46,7 @@ public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "car_id")
-   // @NotNull
+    @NotNull
     private Integer carId;
     @Basic(optional = false)
     @NotNull
@@ -64,7 +63,6 @@ public class Car implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date releaseyear;
     @OneToMany(mappedBy = "carId")
-    @JsonIgnore
     private Collection<User> userCollection;
 
     public Car() {
