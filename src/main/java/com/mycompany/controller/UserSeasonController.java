@@ -12,6 +12,7 @@ import com.mycompany.dao.UserDao;
 import com.mycompany.dao.UserSeasonDao;
 import com.mycompany.utill.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,17 @@ public class UserSeasonController {
             return new Response<>(false, "users not found");
         }
 
+    }
+    
+     @GetMapping("/getScore")
+    public Response<?> score(@Param("user_id") Integer userId, @Param("season_id") Integer seasonId) {
+        UserSeason us = new UserSeason();
+       // UserSeason userSeason = userSeasonDao.getUserScoreInSeason(userId, seasonId);
+        if (userId != null) {
+            return new Response<>(true, us.getScore());
+        } else {
+            return new Response<>(false, "invaild user or season");
+        }
     }
     
     

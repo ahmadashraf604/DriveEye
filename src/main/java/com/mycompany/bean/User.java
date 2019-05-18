@@ -171,6 +171,7 @@ public class User implements Serializable {
         this.level = level;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -222,7 +223,7 @@ public class User implements Serializable {
     public void setLeagueCollection(Collection<League> leagueCollection) {
         this.leagueCollection = leagueCollection;
     }
-
+    @JsonIgnore
     public Car getCarId() {
         return carId;
     }
@@ -230,7 +231,7 @@ public class User implements Serializable {
     public void setCarId(Car carId) {
         this.carId = carId;
     }
-
+    @JsonIgnore
     public City getCityId() {
         return cityId;
     }
