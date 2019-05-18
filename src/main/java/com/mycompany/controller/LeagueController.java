@@ -1,4 +1,3 @@
-
 package com.mycompany.controller;
 
 import com.mycompany.bean.League;
@@ -36,9 +35,9 @@ public class LeagueController {
     }
 
     @GetMapping("get/{id}")
-    public Response<?> getAllLeague(@PathVariable int id ) {
+    public Response<?> getAllLeague(@PathVariable int id) {
         Iterable<League> leagues = leagueDao.findAll();
-        if (leagues.iterator().hasNext()) {   
+        if (leagues.iterator().hasNext()) {
             return new Response<>(true, leagues);
 
         } else {
@@ -54,5 +53,10 @@ public class LeagueController {
             builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
         return builder.toString();
+    }
+
+    public League isLeagueExisted(String code) {
+        return leagueDao.findLeagueByCode(code);
+
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Ashraf_R
  */
 @Entity
-@Table(name = "city")
+@Table(name = "city", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "City.findAll", query = "SELECT c FROM City c")
@@ -43,6 +44,7 @@ public class City implements Serializable {
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy = "cityId")
     private Collection<User> userCollection;
 

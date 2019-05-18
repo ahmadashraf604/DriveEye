@@ -32,7 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Ashraf_R
  */
 @Entity
-@Table(name = "season")
+@Table(name = "season", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Season.findAll", query = "SELECT s FROM Season s")

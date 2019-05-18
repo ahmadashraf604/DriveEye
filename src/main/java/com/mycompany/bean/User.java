@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Ashraf_R
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
@@ -82,17 +82,21 @@ public class User implements Serializable {
     @Lob
     @Column(name = "image")
     private byte[] image;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     
     
     private Collection<UserLeague> userLeagueCollection;
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     
     
     private Collection<Trip> tripCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     
     private Collection<UserSeason> userSeasonCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
     
     
@@ -103,6 +107,7 @@ public class User implements Serializable {
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
     @ManyToOne
     private City cityId;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 

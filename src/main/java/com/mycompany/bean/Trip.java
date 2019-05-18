@@ -5,10 +5,13 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,11 +27,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Ashraf_R
  */
 @Entity
-@Table(name = "trip")
+@Table(name = "trip", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Trip.findAll", query = "SELECT t FROM Trip t")
     , @NamedQuery(name = "Trip.findByTripId", query = "SELECT t FROM Trip t WHERE t.tripId = :tripId")
+    , @NamedQuery(name = "Trip.findByUserId", query = "SELECT t FROM Trip t WHERE t.userId = :userId")
     , @NamedQuery(name = "Trip.findByStartPoint", query = "SELECT t FROM Trip t WHERE t.startPoint = :startPoint")
     , @NamedQuery(name = "Trip.findByEndPoint", query = "SELECT t FROM Trip t WHERE t.endPoint = :endPoint")
     , @NamedQuery(name = "Trip.findByDuration", query = "SELECT t FROM Trip t WHERE t.duration = :duration")
@@ -38,15 +42,18 @@ public class Trip implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trip_id")
     private Integer tripId;
+    @NotNull
     @Size(max = 45)
     @Column(name = "start_point")
     private String startPoint;
+    @NotNull
     @Size(max = 45)
     @Column(name = "end_point")
     private String endPoint;
+    @NotNull
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "duration")
     private Double duration;
@@ -56,6 +63,7 @@ public class Trip implements Serializable {
     @JoinColumn(name = "season_id", referencedColumnName = "season_id")
     @ManyToOne
     private Season seasonId;
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne
     private User userId;
