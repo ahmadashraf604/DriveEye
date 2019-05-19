@@ -44,6 +44,12 @@ public class UserSeasonBadgePK implements Serializable {
         this.seasonId = seasonId;
     }
 
+    public UserSeasonBadgePK(int userId, int badgeId, int seasonId) {
+        this.userId = userId;
+        this.badgeId = badgeId;
+        this.seasonId = seasonId;
+    }
+
     public int getUserSeasonBadgeId() {
         return userSeasonBadgeId;
     }

@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -57,8 +58,10 @@ public class Season implements Serializable {
     private Date endDate;
     @OneToMany(mappedBy = "seasonId")
     private Collection<Trip> tripCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
     private Collection<UserSeason> userSeasonCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 
@@ -150,5 +153,5 @@ public class Season implements Serializable {
     public String toString() {
         return "com.mycompany.bean.Season[ seasonId=" + seasonId + " ]";
     }
-    
+
 }
