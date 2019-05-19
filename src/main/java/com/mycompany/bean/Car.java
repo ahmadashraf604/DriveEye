@@ -46,6 +46,7 @@ public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "car_id")
+    @NotNull
     private Integer carId;
     @Basic(optional = false)
     @NotNull

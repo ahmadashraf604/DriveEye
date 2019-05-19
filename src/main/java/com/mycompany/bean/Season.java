@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -50,19 +51,27 @@ public class Season implements Serializable {
     @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date startDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date endDate;
     @OneToMany(mappedBy = "seasonId")
+    
+      @JsonIgnore
     private Collection<Trip> tripCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
+    
+      @JsonIgnore
     private Collection<UserSeason> userSeasonCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
+    
+    @JsonIgnore
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 
     public Season() {

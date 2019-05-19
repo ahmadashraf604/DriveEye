@@ -84,15 +84,22 @@ public class User implements Serializable {
     private byte[] image;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    
+    
     private Collection<UserLeague> userLeagueCollection;
     @JsonIgnore
     @OneToMany(mappedBy = "userId")
+    
+    
     private Collection<Trip> tripCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    
     private Collection<UserSeason> userSeasonCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
+    
+    
     private Collection<League> leagueCollection;
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
     @ManyToOne
@@ -164,6 +171,7 @@ public class User implements Serializable {
         this.level = level;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -215,7 +223,7 @@ public class User implements Serializable {
     public void setLeagueCollection(Collection<League> leagueCollection) {
         this.leagueCollection = leagueCollection;
     }
-
+    @JsonIgnore
     public Car getCarId() {
         return carId;
     }
@@ -223,7 +231,7 @@ public class User implements Serializable {
     public void setCarId(Car carId) {
         this.carId = carId;
     }
-
+    @JsonIgnore
     public City getCityId() {
         return cityId;
     }
