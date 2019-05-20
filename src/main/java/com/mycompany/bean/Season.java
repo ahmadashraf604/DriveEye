@@ -65,13 +65,9 @@ public class Season implements Serializable {
     private Collection<Trip> tripCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
-    
-      @JsonIgnore
-    private Collection<UserSeason> userSeasonCollection;
+        private Collection<UserSeason> userSeasonCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
-    
-    @JsonIgnore
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 
     public Season() {

@@ -5,7 +5,6 @@
  */
 package com.mycompany.controller;
 
-import com.mycompany.bean.Season;
 import com.mycompany.bean.UserSeasonBadge;
 import com.mycompany.dao.BadgeDao;
 import com.mycompany.dao.SeasonDao;
@@ -74,15 +73,12 @@ public class UserSeasonBadgeController {
                             userDao.findById(userId).get()
                     );
                     userSeasonBadgeDao.save(userSeasonBadgeTemp);
+                     return new Response<>(true, "Added Sucsessfuly");
                 }
             }
         }
-        Iterable<UserSeasonBadge> iterable = userSeasonBadgeDao.findByUserIdAndSeasonId(userId, seasonId);
-        if (iterable.iterator().hasNext()) {
-            return new Response<>(true, iterable);
-        } else {
-            return new Response<>(false, "user not have badge in this season");
-        }
+         return new Response<>(false, "Error Ocure");
+       
     }
 
 }
