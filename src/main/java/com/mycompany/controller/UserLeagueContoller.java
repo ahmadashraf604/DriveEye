@@ -12,15 +12,9 @@ import org.jboss.logging.Param;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author Abdelrahman
- */
 @RestController
 @RequestMapping("user_league")
 public class UserLeagueContoller {
@@ -74,20 +68,16 @@ public class UserLeagueContoller {
                 league.setUserLeaguePK(l.getUserLeaguePK());
                 userLeagues.add(league);
             }
-
             System.out.println("league size : " + leagues.size());
             return new Response<>(true, userLeagues);
 
         } else {
             return new Response<>(true, "now subsscribed league");
         }
-
     }
-
     // check league if  user was subscribed in this league
     public boolean isSubscribed(int leagueId, int userId) {
         return userLeagueDao.findUserLeague(userId, leagueId) != null;
 
     }
-
 }

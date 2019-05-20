@@ -60,19 +60,13 @@ public class CityContoller {
         }
         return null;
     }
-    
-    
-      @GetMapping("delete/{id}")
+
+    @GetMapping("delete/{id}")
     public Response<?> deleteCoach(@PathVariable int id) {
-        System.out.println("caoching" + id);
 
-        boolean coaching = cityDao.existsById(id);
-        System.out.println("caoching" + coaching);
-        if (coaching) {
-
+        if (cityDao.existsById(id)) {
             cityDao.deleteById(id);
             return new Response<>(true, "city deleted successfully");
-
         }
         return new Response<>(false, Constants.WRONG_MESSAGE);
 
