@@ -23,6 +23,7 @@ C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\User.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\UserLeaguePK.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\UserSeason.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\UserController.java
+C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dao\UserSeasonBadgeDao.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dto\LeagueDto.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\LeagueController.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dao\UserLeagueDao.java
@@ -46,4 +47,5 @@ C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\Use
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Badge.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\League.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\bean\Coaching.java
+C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\controller\UserSeasonBadgeController.java
 C:\Users\Abdelrahman\Desktop\DriveEye\src\main\java\com\mycompany\dto\CoachingDto.java

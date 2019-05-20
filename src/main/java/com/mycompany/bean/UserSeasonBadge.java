@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "UserSeasonBadge.findAll", query = "SELECT u FROM UserSeasonBadge u")
     , @NamedQuery(name = "UserSeasonBadge.findByUserSeasonBadgeId", query = "SELECT u FROM UserSeasonBadge u WHERE u.userSeasonBadgePK.userSeasonBadgeId = :userSeasonBadgeId")
+    , @NamedQuery(name = "UserSeasonBadge.findByUserIdAndSeasonId", query = "SELECT u FROM UserSeasonBadge u WHERE u.userSeasonBadgePK.userId = :userId And u.userSeasonBadgePK.seasonId = :seasonId")
     , @NamedQuery(name = "UserSeasonBadge.findByUserId", query = "SELECT u FROM UserSeasonBadge u WHERE u.userSeasonBadgePK.userId = :userId")
     , @NamedQuery(name = "UserSeasonBadge.findByBadgeId", query = "SELECT u FROM UserSeasonBadge u WHERE u.userSeasonBadgePK.badgeId = :badgeId")
     , @NamedQuery(name = "UserSeasonBadge.findBySeasonId", query = "SELECT u FROM UserSeasonBadge u WHERE u.userSeasonBadgePK.seasonId = :seasonId")})
@@ -44,6 +45,13 @@ public class UserSeasonBadge implements Serializable {
     private User user;
 
     public UserSeasonBadge() {
+    }
+
+    public UserSeasonBadge(Badge badge, Season season, User user) {
+        this.badge = badge;
+        this.season = season;
+        this.user = user;
+        userSeasonBadgePK=new UserSeasonBadgePK( user.getUserId(), badge.getBadgeId(), season.getSeasonId());
     }
 
     public UserSeasonBadge(UserSeasonBadgePK userSeasonBadgePK) {
