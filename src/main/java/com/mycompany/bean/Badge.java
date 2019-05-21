@@ -43,7 +43,7 @@ public class Badge implements Serializable {
     @Basic(optional = false)
     @Column(name = "badge_id")
     private Integer badgeId;
-    @Lob
+//    @Lob
     @Column(name = "image")
     private byte[] image;
     @Size(max = 45)

@@ -47,10 +47,10 @@ public class CarController {
         if (cars.iterator().hasNext()) {
             return new Response<>(true, cars);
         }else{
-            return new Response<>(false, "carss not found");
-        }
-        
+            return new Response<>(false, "cars not found");
+        } 
     }
+    
     @GetMapping("/add")
     public Response <?> addCar(@Param String brand ,@Param String model) {
         Car car = new Car();

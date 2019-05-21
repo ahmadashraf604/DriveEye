@@ -28,4 +28,5 @@ com\mycompany\dao\BadgeDao.class
 com\mycompany\bean\Season.class
 com\mycompany\bean\Car.class
 com\mycompany\driveeye\DriveEyeApplication.class
+com\mycompany\controller\BadgeController.class
 com\mycompany\bean\UserSeason.class
