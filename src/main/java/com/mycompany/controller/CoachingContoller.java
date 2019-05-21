@@ -55,11 +55,8 @@ public class CoachingContoller {
 
     @GetMapping("delete/{id}")
     public Response<?> deleteCoach(@PathVariable int id) {
-        System.out.println("caoching" + id);
 
-        boolean coaching = coachingDao.existsById(id);
-        System.out.println("caoching" + coaching);
-        if (coaching) {
+        if (coachingDao.existsById(id)) {
 
             coachingDao.deleteById(id);
             return new Response<>(true, "coach deleted successfully");

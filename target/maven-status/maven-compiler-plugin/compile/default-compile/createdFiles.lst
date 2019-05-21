@@ -1,6 +1,7 @@
 com\mycompany\dto\CarDto.class
 com\mycompany\dao\UserLeagueDao.class
 com\mycompany\bean\Badge.class
+com\mycompany\controller\UserSeasonBadgeController.class
 com\mycompany\controller\CityContoller.class
 com\mycompany\utill\Response.class
 com\mycompany\controller\SeasonController.class
@@ -15,6 +16,7 @@ com\mycompany\bean\City.class
 com\mycompany\dto\UserSeasonBadgeDto.class
 com\mycompany\bean\Coaching.class
 com\mycompany\dto\TripDto.class
+com\mycompany\dao\UserSeasonBadgeDao.class
 com\mycompany\bean\Season.class
 com\mycompany\driveeye\DriveEyeApplication.class
 com\mycompany\dao\CityDao.class

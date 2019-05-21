@@ -64,13 +64,11 @@ public class Season implements Serializable {
     
       @JsonIgnore
     private Collection<Trip> tripCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
-    
-      @JsonIgnore
-    private Collection<UserSeason> userSeasonCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
-    
     @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
+        private Collection<UserSeason> userSeasonCollection;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 
     public Season() {
@@ -161,5 +159,5 @@ public class Season implements Serializable {
     public String toString() {
         return "com.mycompany.bean.Season[ seasonId=" + seasonId + " ]";
     }
-    
+
 }
