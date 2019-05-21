@@ -5,9 +5,10 @@
  */
 package com.mycompany.dao;
 
-import com.mycompany.bean.User;
+import com.mycompany.bean.Trip;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Repository;
  * @author Ashraf_R
  */
 @Repository
-public interface TripDao extends CrudRepository<User, Integer> {
-    
+public interface TripDao extends CrudRepository<Trip, Integer> {
+
+    @Query(name = "Trip.findByUserId")
+    Iterable<Trip> findByUserId(@Param("userId") int userId);
 }

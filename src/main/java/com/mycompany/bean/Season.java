@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -24,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -35,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Season.findAll", query = "SELECT s FROM Season s")
     , @NamedQuery(name = "Season.findBySeasonId", query = "SELECT s FROM Season s WHERE s.seasonId = :seasonId")
+    //, @NamedQuery(name = "Season.findByUserId", query = "SELECT s FROM Season s JOIN s.UserSeasonPK us WHERE us.userId = :userId ")
     , @NamedQuery(name = "Season.findByStartDate", query = "SELECT s FROM Season s WHERE s.startDate = :startDate")
     , @NamedQuery(name = "Season.findByEndDate", query = "SELECT s FROM Season s WHERE s.endDate = :endDate")})
 public class Season implements Serializable {
@@ -49,16 +52,22 @@ public class Season implements Serializable {
     @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date startDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date endDate;
     @OneToMany(mappedBy = "seasonId")
+    
+      @JsonIgnore
     private Collection<Trip> tripCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
-    private Collection<UserSeason> userSeasonCollection;
+        private Collection<UserSeason> userSeasonCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 
@@ -150,5 +159,5 @@ public class Season implements Serializable {
     public String toString() {
         return "com.mycompany.bean.Season[ seasonId=" + seasonId + " ]";
     }
-    
+
 }

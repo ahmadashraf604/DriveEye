@@ -46,6 +46,7 @@ public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "car_id")
+    @NotNull
     private Integer carId;
     @Basic(optional = false)
     @NotNull
@@ -58,7 +59,7 @@ public class Car implements Serializable {
     @Lob
     @Column(name = "image")
     private byte[] image;
-    @Column(name = "Release_year")
+    @Column(name = "release_year")
     @Temporal(TemporalType.DATE)
     private Date releaseyear;
     @OneToMany(mappedBy = "carId")
