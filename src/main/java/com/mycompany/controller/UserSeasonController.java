@@ -5,12 +5,14 @@
  */
 package com.mycompany.controller;
 
-import com.mycompany.bean.Car;
 import com.mycompany.bean.User;
 import com.mycompany.bean.UserSeason;
+import com.mycompany.dao.SeasonDao;
 import com.mycompany.dao.UserDao;
 import com.mycompany.dao.UserSeasonDao;
 import com.mycompany.utill.Response;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,9 @@ public class UserSeasonController {
     
     @Autowired
     private UserDao userDao;
+    
+    @Autowired
+    private SeasonDao seasonDao;
 
     public void setUserSeasonDao(UserSeasonDao userSeasonDao) {
         this.userSeasonDao = userSeasonDao;
@@ -48,15 +53,49 @@ public class UserSeasonController {
     
      @GetMapping("/getScore")
     public Response<?> score(@Param("user_id") Integer userId, @Param("season_id") Integer seasonId) {
-        UserSeason us = new UserSeason();
-       // UserSeason userSeason = userSeasonDao.getUserScoreInSeason(userId, seasonId);
-        if (userId != null) {
-            return new Response<>(true, us.getScore());
+         List<UserSeason> score = userSeasonDao.getUserScore(userId , seasonId);
+        if (score.iterator().hasNext()) {
+
+            List<UserSeason> userSeasons = new ArrayList<>();
+            for (UserSeason s : score) {
+                UserSeason us = new UserSeason();
+                //us.setSeason(s.getSeason());
+                us.setScore(s.getScore());
+                us.setTripCount(s.getTripCount());
+                //us.setUserSeasonPK(s.getUserSeasonPK());
+                
+                userSeasons.add(us);
+            }
+
+            return new Response<>(true, userSeasons);
+
         } else {
-            return new Response<>(false, "invaild user or season");
+            return new Response<>(false, "no score for this user");
         }
+
     }
     
-    
-    
+    @GetMapping("/userSeasons")
+    public Response<?> getUserSeasons(@Param("userId") Integer userId) {
+      
+      List<UserSeason> seasons = userSeasonDao.getUserSeasons(userId);
+        if (seasons.iterator().hasNext()) {
+
+            List<UserSeason> userSeasons = new ArrayList<>();
+            for (UserSeason s : seasons) {
+                UserSeason season = new UserSeason();
+                season.setSeason(s.getSeason());
+                season.setUserSeasonPK(s.getUserSeasonPK());
+                
+                userSeasons.add(season);
+            }
+
+            return new Response<>(true, userSeasons);
+
+        } else {
+            return new Response<>(false, "no Seasons for this user");
+        }
+
+    }
 }
+
