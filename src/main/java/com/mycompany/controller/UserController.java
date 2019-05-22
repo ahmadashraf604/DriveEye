@@ -49,7 +49,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public Response<?> getUsers() {
         Iterable<User> users = userDao.findAll();
         if (users.iterator().hasNext()) {
