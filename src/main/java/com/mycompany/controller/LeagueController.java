@@ -34,8 +34,9 @@ public class LeagueController {
         return new Response<>(true, " league created successeully with code " + league.getCode());
     }
 
-    @GetMapping("get/{id}")
-    public Response<?> getAllLeague(@PathVariable int id) {
+    @GetMapping("getAll")
+    public Response<?> getAllLeague() {
+        System.out.println("getAll method");
         Iterable<League> leagues = leagueDao.findAll();
         if (leagues.iterator().hasNext()) {
             return new Response<>(true, leagues);

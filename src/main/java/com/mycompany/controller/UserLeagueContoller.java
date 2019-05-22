@@ -75,9 +75,15 @@ public class UserLeagueContoller {
             return new Response<>(true, "now subsscribed league");
         }
     }
+
     // check league if  user was subscribed in this league
     public boolean isSubscribed(int leagueId, int userId) {
         return userLeagueDao.findUserLeague(userId, leagueId) != null;
 
+    }
+
+    // truncate all leaguesfrom db  in the end of the season 
+    public void seleteAll() {
+        userLeagueDao.deleteAll();
     }
 }
