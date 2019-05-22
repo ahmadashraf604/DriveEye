@@ -19,6 +19,7 @@ com\mycompany\dto\TripDto.class
 com\mycompany\dao\UserSeasonBadgeDao.class
 com\mycompany\bean\Season.class
 com\mycompany\driveeye\DriveEyeApplication.class
+com\mycompany\controller\BadgeController.class
 com\mycompany\dao\CityDao.class
 utils\Constants.class
 com\mycompany\bean\UserSeasonBadgePK.class

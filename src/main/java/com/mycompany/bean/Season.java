@@ -37,6 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NamedQueries({
     @NamedQuery(name = "Season.findAll", query = "SELECT s FROM Season s")
     , @NamedQuery(name = "Season.findBySeasonId", query = "SELECT s FROM Season s WHERE s.seasonId = :seasonId")
+    //, @NamedQuery(name = "Season.findByUserId", query = "SELECT s FROM Season s JOIN s.UserSeasonPK us WHERE us.userId = :userId ")
     , @NamedQuery(name = "Season.findByStartDate", query = "SELECT s FROM Season s WHERE s.startDate = :startDate")
     , @NamedQuery(name = "Season.findByEndDate", query = "SELECT s FROM Season s WHERE s.endDate = :endDate")})
 public class Season implements Serializable {

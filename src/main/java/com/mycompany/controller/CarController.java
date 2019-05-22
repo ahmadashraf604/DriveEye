@@ -53,6 +53,7 @@ public class CarController {
         Iterable<Car> cars = carDao.findAll();
         if (cars.iterator().hasNext()) {
             return new Response<>(true, cars);
+
         } else {
             return new Response<>(false, "cars not found");
         }
