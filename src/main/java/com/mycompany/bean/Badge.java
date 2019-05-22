@@ -5,6 +5,7 @@
  */
 package com.mycompany.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -43,7 +44,7 @@ public class Badge implements Serializable {
     @Basic(optional = false)
     @Column(name = "badge_id")
     private Integer badgeId;
-    @Lob
+//    @Lob
     @Column(name = "image")
     private byte[] image;
     @Size(max = 45)
@@ -52,6 +53,7 @@ public class Badge implements Serializable {
     @Size(max = 45)
     @Column(name = "type")
     private String type;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "badge")
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;
 
