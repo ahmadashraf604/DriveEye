@@ -5,18 +5,21 @@ import com.mycompany.bean.User;
 import com.mycompany.bean.UserLeague;
 import com.mycompany.bean.UserLeaguePK;
 import com.mycompany.dao.UserLeagueDao;
+import com.mycompany.dto.LeagueDto;
+import com.mycompany.dto.UserLeagueDto;
 import com.mycompany.utill.Response;
 import java.util.ArrayList;
 import java.util.List;
-import org.jboss.logging.Param;
-
+import org.springframework.data.repository.query.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("user_league")
+@RequestMapping("userLeague")
 public class UserLeagueContoller {
 
     @Autowired
@@ -28,8 +31,8 @@ public class UserLeagueContoller {
     @Autowired
     UserController userController;
 
-    @GetMapping("join")
-    public Response<?> subscribe(@Param String leagueCode, @Param int userID) {
+    @PostMapping("join/{userID}")
+    public Response<?> subscribe(@Param("leagueCode") String leagueCode, @PathVariable int userID) {
         User user = userController.existUserById(userID);
         if (user != null) {
             League league = leagueController.isLeagueExisted(leagueCode);
@@ -38,6 +41,7 @@ public class UserLeagueContoller {
                     UserLeague userLeague = new UserLeague();
                     userLeague.setLeague(league);
                     userLeague.setUser(user);
+                    userLeague.setScore(0);
                     UserLeaguePK userLeaguePK = new UserLeaguePK();
                     userLeaguePK.setLeagueId(league.getLeagueId());
                     userLeaguePK.setUserId(userID);
@@ -45,35 +49,38 @@ public class UserLeagueContoller {
                     userLeagueDao.save(userLeague);
                     return new Response<>(true, "add sucessfully");
                 } else {
-                    return new Response<>(false, "user aready subscribed ");
+                    return new Response<>(false, "user aready subscribed");
                 }
             } else {
-                return new Response<>(false, "no such league with code : " + leagueCode);
+                return new Response<>(false, "no such league with code: " + leagueCode);
             }
         } else {
-            return new Response<>(false, "user is null  " + userID);
+            return new Response<>(false, "no such user with this id: " + userID);
         }
     }
 
-    @GetMapping("subscribed")
-    public Response<?> getSubscrubesLeague(@Param int user_id) {
-        List<UserLeague> leagues = userLeagueDao.getSubscribedLeague(user_id);
-        if (leagues.size() > 0) {
-
-            List<UserLeague> userLeagues = new ArrayList<>();
-            for (UserLeague l : leagues) {
-                UserLeague league = new UserLeague();
-                league.setLeague(l.getLeague());
-                league.setScore(l.getScore());
-                league.setUserLeaguePK(l.getUserLeaguePK());
-                userLeagues.add(league);
+    @GetMapping("subscribed/{userID}")
+    public Response<?> getSubscrubesLeague(@PathVariable int userID) {
+        List<UserLeague> userLeagues = userLeagueDao.getSubscribedLeague(userID);
+        if (userLeagues.size() > 0) {
+            List<UserLeagueDto> userLeagueDtos = new ArrayList<>();
+            for (UserLeague userLeague : userLeagues) {
+                UserLeagueDto userLeagueDto = new UserLeagueDto();
+                League league = userLeague.getLeague();
+                LeagueDto leagueDto = new LeagueDto();
+                leagueDto.setCode(league.getCode());
+                leagueDto.setLeagueId(league.getLeagueId());
+                leagueDto.setName(league.getName());
+                leagueDto.setOwnerId(league.getOwnerId().getUserId());
+                leagueDto.setUserCount(league.getUserCount());
+               
+                userLeagueDto.setScore(userLeague.getScore());
+                userLeagueDto.setLeague(leagueDto);
+                userLeagueDtos.add(userLeagueDto);
             }
-            System.out.println("league size : " + leagues.size());
-            return new Response<>(true, userLeagues);
-
-        } else {
-            return new Response<>(true, "now subsscribed league");
+            return new Response<>(true, userLeagueDtos);
         }
+        return new Response<>(true, "no subscribed league");
     }
 
     // check league if  user was subscribed in this league
