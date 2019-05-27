@@ -27,10 +27,10 @@ public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK> 
     public List<UserLeague> getSubscribedLeague(@Param("userId") int userID);
 
     @Query(value = "select l.row_number "
-            + "from (select *, ROW_NUMBER() OVER(order by score DESC) from user_league "
-            + "where league_id = :leagueId "
-            + "order by score DESC) l "
-            + "where user_id = :userId",
+            + "from (select u, ROW_NUMBER() OVER(order by u.score DESC) from user_league u"
+            + "where u.league_id = :leagueId "
+            + "order by u.score DESC) l "
+            + "where l.user_id = :userId",
             nativeQuery = true)
     public Integer getRank(@Param("userId") int userID, @Param("leagueId") int leagueId);
 
