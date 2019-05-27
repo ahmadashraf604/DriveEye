@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="jpaMappingContext" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.mycompany.bean.UserSeasonBadge</class>
+    <class>com.mycompany.bean.City</class>
+    <class>com.mycompany.bean.Badge</class>
+    <class>com.mycompany.bean.Trip</class>
+    <class>com.mycompany.bean.UserSeason</class>
+    <class>com.mycompany.bean.User</class>
+    <class>com.mycompany.bean.Coaching</class>
+    <class>com.mycompany.bean.Season</class>
+    <class>com.mycompany.bean.League</class>
+    <class>com.mycompany.bean.UserLeague</class>
+    <class>com.mycompany.bean.Car</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/driveeyedb?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="1529"/>
+    </properties>
+  </persistence-unit>
+</persistence>

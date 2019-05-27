@@ -13,12 +13,11 @@ import java.io.Serializable;
  */
 public class LeagueDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private Integer leagueId;
     private String name;
     private String code;
     private Integer userCount;
-    private UserDto ownerId;
+    private int ownerId;
 
     public LeagueDto() {
     }
@@ -59,37 +58,11 @@ public class LeagueDto implements Serializable {
         this.userCount = userCount;
     }
 
-    public UserDto getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UserDto ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (leagueId != null ? leagueId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LeagueDto)) {
-            return false;
-        }
-        LeagueDto other = (LeagueDto) object;
-        if ((this.leagueId == null && other.leagueId != null) || (this.leagueId != null && !this.leagueId.equals(other.leagueId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.mycompany.dto.League[ leagueId=" + leagueId + " ]";
-    }
-
 }

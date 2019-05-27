@@ -34,11 +34,4 @@ public class UserLeagueDto implements Serializable {
     public void setLeague(LeagueDto league) {
         this.league = league;
     }
-
-
-    @Override
-    public String toString() {
-        return "com.mycompany.dto.UserLeague[  ]";
-    }
-    
 }
