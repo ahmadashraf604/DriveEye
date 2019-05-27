@@ -19,30 +19,35 @@ public class CoachingContoller {
     CoachingDao coachingDao;
 
     @GetMapping("add")
-    public Response<?> add(@Param String description) {
-        System.out.println("describtion : " + description);
-        if (description == null || description.trim().isEmpty()) {
-            return new Response<>(true, "invalid coach name");
+    public Response<?> add(@Param String title, @Param String description) {
+        if (description == null || title == null || description.trim().isEmpty() || title.trim().isEmpty()) {
+            return new Response<>(true, "missing some data 'title or description' ");
 
         }
         Coaching coaching = new Coaching();
-
         coaching.setDescription(description);
+        coaching.setTitle(title);
         coaching = coachingDao.save(coaching);
         if (coaching != null) {
             return new Response<>(true, "add  successfully");
-
         }
 
         return new Response<>(true, "some thing went wrong");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("get/{id}")
     public Response<?> getById(@PathVariable int id) {
-        return new Response<>(true, coachingDao.findById(id).get());
+        if (coachingDao.existsById(id)) {
+            Coaching coaching = coachingDao.findById(id).get();
+            if (coaching != null) {
+                return new Response<>(true, coaching);
+            }
+        }
+        return new Response<>(true, "coach not found ");
     }
 
-    @GetMapping("get")
+    // return all coaches 
+    @GetMapping("getAll")
     public Response<?> getAllLeague() {
         Iterable<Coaching> coachings = coachingDao.findAll();
         if (coachings.iterator().hasNext()) {
@@ -53,17 +58,24 @@ public class CoachingContoller {
         }
     }
 
+    // delete coach by ID 
     @GetMapping("delete/{id}")
     public Response<?> deleteCoach(@PathVariable int id) {
 
         if (coachingDao.existsById(id)) {
-
             coachingDao.deleteById(id);
             return new Response<>(true, "coach deleted successfully");
-
         }
         return new Response<>(false, Constants.WRONG_MESSAGE);
-
     }
 
+    @GetMapping("deleteAll")
+    public Response<?> deleteAll() {
+        coachingDao.deleteAll();
+        Iterable<Coaching> coachings = coachingDao.findAll();
+        if (coachings == null) {
+            return new Response<>(true, "operation did not completed");
+        }
+        return new Response<>(true, "all coaches deleted");
+    }
 }
