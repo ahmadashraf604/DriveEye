@@ -82,7 +82,7 @@ public class LeagueController {
         leagueDto.setOwnerId(savedLeague.getOwnerId().getUserId());
         leagueDto.setName(savedLeague.getName());
         leagueDto.setScore(0);
-        leagueDto.setRank(0);
+        leagueDto.setRank(1);
         return leagueDto;
     }
 
