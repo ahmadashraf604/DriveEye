@@ -45,7 +45,7 @@ public class Coaching implements Serializable {
     @Size(max = 45)
     @Column(name = "description")
     private String description;
-    @Lob
+//    @Lob
     @Column(name = "image")
     private byte[] image;
 
