@@ -1,6 +1,7 @@
 com\mycompany\dto\CarDto.class
 com\mycompany\dao\UserLeagueDao.class
 com\mycompany\bean\Badge.class
+com\mycompany\controller\UserSeasonBadgeController.class
 com\mycompany\controller\CityContoller.class
 com\mycompany\utill\Response.class
 com\mycompany\controller\SeasonController.class
@@ -15,6 +16,7 @@ com\mycompany\bean\City.class
 com\mycompany\dto\UserSeasonBadgeDto.class
 com\mycompany\bean\Coaching.class
 com\mycompany\dto\TripDto.class
+com\mycompany\dao\UserSeasonBadgeDao.class
 com\mycompany\bean\Season.class
 com\mycompany\driveeye\DriveEyeApplication.class
 com\mycompany\controller\BadgeController.class
@@ -24,9 +26,12 @@ com\mycompany\bean\UserSeasonBadgePK.class
 com\mycompany\dao\TripDao.class
 com\mycompany\dto\CoachingDto.class
 com\mycompany\dto\CityDto.class
+com\mycompany\dto\UserLeagueDto.class
 com\mycompany\utill\ErrorReport.class
+com\mycompany\controller\UserController.class
 com\mycompany\dto\SeasonDto.class
 com\mycompany\bean\UserLeague.class
+com\mycompany\controller\UserLeagueContoller.class
 com\mycompany\bean\UserSeasonBadge.class
 com\mycompany\dao\UserDao.class
 com\mycompany\bean\Trip.class
@@ -34,6 +39,7 @@ com\mycompany\controller\CoachingContoller.class
 com\mycompany\controller\TripController.class
 com\mycompany\dao\SeasonDao.class
 com\mycompany\dto\BadgeDto.class
+com\mycompany\controller\LeagueController.class
 com\mycompany\controller\UserSeasonController.class
 com\mycompany\driveeye\ServletInitializer.class
 com\mycompany\bean\User.class
@@ -42,4 +48,5 @@ com\mycompany\dto\UserSeasonDto.class
 com\mycompany\dao\BadgeDao.class
 com\mycompany\bean\Car.class
 com\mycompany\dao\UserSeasonDao.class
+com\mycompany\dto\LeagueDto.class
 com\mycompany\bean\UserSeason.class

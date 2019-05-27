@@ -22,7 +22,6 @@ public class CoachingContoller {
     public Response<?> add(@Param String title, @Param String description) {
         if (description == null || title == null || description.trim().isEmpty() || title.trim().isEmpty()) {
             System.out.println("add");
-
             return new Response<>(true, "missing some data 'title or description' ");
         }
         Coaching coaching = new Coaching();
