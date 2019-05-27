@@ -26,7 +26,6 @@ com\mycompany\bean\UserSeasonBadgePK.class
 com\mycompany\dao\TripDao.class
 com\mycompany\dto\CoachingDto.class
 com\mycompany\dto\CityDto.class
-com\mycompany\dto\UserLeagueDto.class
 com\mycompany\utill\ErrorReport.class
 com\mycompany\controller\UserController.class
 com\mycompany\dto\SeasonDto.class

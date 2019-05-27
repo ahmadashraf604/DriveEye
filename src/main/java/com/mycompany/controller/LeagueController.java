@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("league")
@@ -62,6 +64,16 @@ public class LeagueController {
         }
     }
 
+    @DeleteMapping("delete/{leagueId}")
+    public Response<?> deleteUserLeage(@PathVariable int leagueId) {
+        League league = isLeagueExisted(leagueId);
+        if (league != null) {
+            leagueDao.delete(league);
+            return new Response<>(true, "delete successfully");
+        }
+        return new Response<>(false, "no such league");
+    }
+
     private LeagueDto convertLeagueToDto(League savedLeague) {
         LeagueDto leagueDto = new LeagueDto();
         leagueDto.setCode(savedLeague.getCode());
@@ -69,7 +81,8 @@ public class LeagueController {
         leagueDto.setName(savedLeague.getName());
         leagueDto.setOwnerId(savedLeague.getOwnerId().getUserId());
         leagueDto.setName(savedLeague.getName());
-        leagueDto.setUserCount(savedLeague.getUserCount());
+        leagueDto.setScore(0);
+        leagueDto.setRank(0);
         return leagueDto;
     }
 
@@ -85,6 +98,12 @@ public class LeagueController {
 
     public League isLeagueExisted(String code) {
         return leagueDao.findLeagueByCode(code);
+    }
 
+    public League isLeagueExisted(int leagueID) {
+        if (leagueDao.existsById(leagueID)) {
+            return leagueDao.findById(leagueID).get();
+        }
+        return null;
     }
 }
