@@ -6,8 +6,9 @@
 package com.mycompany.dao;
 
 import com.mycompany.bean.Season;
-import com.mycompany.bean.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,5 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SeasonDao extends CrudRepository<Season,Integer> {
+    @Query(name = "UserSeason.findBySeasonId")
+    public Season getSeasonUsers(@Param("seasonId") Integer seasonId);
     
 }

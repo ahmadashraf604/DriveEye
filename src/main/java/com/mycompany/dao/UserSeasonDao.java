@@ -20,11 +20,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserSeasonDao extends CrudRepository<UserSeason, Integer> { 
    
+    
     @Query(name = "UserSeason.findByUserId")
     public List<UserSeason> getUserSeasons(@Param("userId") Integer userId);
     
     @Query(name = "UserSeason.findBySeasonIdAndUserId")
     public List<UserSeason> getUserScore(@Param("userId") Integer userId , @Param("seasonId") Integer seasonId );
+    
+    @Query(name = "UserSeason.findBySeasonIdWithOrder")
+    public List<UserSeason> getSeasonScoreOrderd(@Param("seasonId") Integer seasonId );
+    
     
 
 }

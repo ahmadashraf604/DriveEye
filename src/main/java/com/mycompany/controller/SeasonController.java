@@ -6,11 +6,17 @@
 package com.mycompany.controller;
 
 import com.mycompany.bean.Season;
+import com.mycompany.bean.UserSeason;
 import com.mycompany.dao.SeasonDao;
+import com.mycompany.dto.SeasonDto;
 import com.mycompany.utill.Response;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,21 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/season")
 public class SeasonController {
-    
-    
+
     @Autowired
     private SeasonDao seasonDao;
-    
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Response<?> addSeason(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate ,
+    public Response<?> addSeason(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
         Season season = new Season();
         season.setStartDate(startDate);
         season.setEndDate(endDate);
         seasonDao.save(season);
         return new Response<>(true, season);
-       // return new Response<>(true, "Season added sucessfully");
+        // return new Response<>(true, "Season added sucessfully");
 
     }
-    
 }

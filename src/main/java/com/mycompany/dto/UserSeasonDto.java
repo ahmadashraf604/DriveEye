@@ -13,43 +13,54 @@ import java.io.Serializable;
  */
 public class UserSeasonDto implements Serializable {
 
-     private Integer score;
-     private Integer tripCount;
-    private SeasonDto season;
+    private int userID;
+    private String username;
+    private int score;
+    private int rank;
 
-    public UserSeasonDto() {
+    public UserSeasonDto(int userID, String username, int score, int rank) {
+        this.userID = userID;
+        this.username = username;
+        this.score = score;
+        this.rank = rank;
     }
 
-  
-   
-    public Integer getScore() {
+
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public Integer getTripCount() {
-        return tripCount;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTripCount(Integer tripCount) {
-        this.tripCount = tripCount;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public SeasonDto getSeason() {
-        return season;
+    public int getRank() {
+        return rank;
     }
 
-    public void setSeason(SeasonDto season) {
-        this.season = season;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
-   
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     @Override
     public String toString() {
         return "com.mycompany.bean.UserSeason[  ]";
     }
-    
+
 }
