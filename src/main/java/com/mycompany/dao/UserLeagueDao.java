@@ -25,6 +25,9 @@ public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK> 
 
     @Query(name = "UserLeague.findByUserId")
     public List<UserLeague> getSubscribedLeague(@Param("userId") int userID);
+    
+    @Query(name = "UserLeague.findByLeagueId")
+    public List<UserLeague> getUsers(@Param("leagueId") int leagueId);
 
     @Query(value = "select l.row_number "
             + "from (select *, ROW_NUMBER() OVER(order by score DESC) from user_league "

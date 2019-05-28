@@ -6,6 +6,7 @@ import com.mycompany.bean.UserLeague;
 import com.mycompany.bean.UserLeaguePK;
 import com.mycompany.dao.UserLeagueDao;
 import com.mycompany.dto.LeagueDto;
+import com.mycompany.dto.UserLeagueDto;
 import com.mycompany.utill.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,20 +81,30 @@ public class UserLeagueContoller {
         if (userLeagues.size() > 0) {
             List<LeagueDto> leagueDtos = new ArrayList<>();
             for (UserLeague userLeague : userLeagues) {
-
-                League league = userLeague.getLeague();
-                LeagueDto leagueDto = new LeagueDto();
-                leagueDto.setCode(league.getCode());
-                leagueDto.setLeagueId(league.getLeagueId());
-                leagueDto.setName(league.getName());
-                leagueDto.setOwnerId(league.getOwnerId().getUserId());
-                leagueDto.setScore(userLeague.getScore());
-                leagueDto.setRank(userLeagueDao.getRank(userID, league.getLeagueId()));
-                leagueDtos.add(leagueDto);
+                leagueDtos.add(convertLeagueToDto(userLeague, userID));
             }
             return new Response<>(true, leagueDtos);
         }
         return new Response<>(true, "no subscribed league");
+    }
+    
+    @GetMapping("getUsers/{leagueID}")
+    public Response<?> getUsers(@PathVariable int leagueID) {
+        League league = leagueController.isLeagueExisted(leagueID);
+        if(league != null){
+            List<UserLeague> userLeagues = userLeagueDao.getUsers(leagueID);
+            List<UserLeagueDto> userLeagueDtos = new ArrayList<>();
+            for(UserLeague userLeague: userLeagues){
+                UserLeagueDto userLeagueDto = new UserLeagueDto();
+                userLeagueDto.setScore(userLeague.getScore());
+                userLeagueDto.setUsername(userLeague.getUser().getFirstName()+" "+userLeague.getUser().getLastName());
+                userLeagueDto.setUserID(userLeague.getUser().getUserId());
+                userLeagueDto.setRank(userLeagueDao.getRank(userLeague.getUser().getUserId(), leagueID));
+                userLeagueDtos.add(userLeagueDto);
+            }
+            return new Response<>(true, userLeagueDtos);
+        }
+        return new Response<>(false, "no such league");
     }
 
     // check league if  user was subscribed in this league
@@ -106,4 +117,15 @@ public class UserLeagueContoller {
         userLeagueDao.deleteAll();
     }
 
+    private LeagueDto convertLeagueToDto(UserLeague userLeague, int userID) {
+        League league = userLeague.getLeague();
+        LeagueDto leagueDto = new LeagueDto();
+        leagueDto.setCode(league.getCode());
+        leagueDto.setLeagueId(league.getLeagueId());
+        leagueDto.setName(league.getName());
+        leagueDto.setOwnerId(league.getOwnerId().getUserId());
+        leagueDto.setScore(userLeague.getScore());
+        leagueDto.setRank(userLeagueDao.getRank(userID, league.getLeagueId()));
+        return leagueDto;
+    }
 }
