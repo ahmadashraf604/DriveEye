@@ -18,11 +18,23 @@ import org.springframework.data.repository.query.Param;
  * @author Abdelrahman
  */
 @Repository
-public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK>{
-    
+public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK> {
+
     @Query(name = "UserLeague.findByUserIdAndLeagueId")
-    UserLeague findUserLeague(@Param("userId") int userId,@Param("leagueId") int leagueId);
-    
+    UserLeague findUserLeague(@Param("userId") int userId, @Param("leagueId") int leagueId);
+
     @Query(name = "UserLeague.findByUserId")
-    public List<UserLeague> getSubscribedLeague(@Param("userId")int userID);
+    public List<UserLeague> getSubscribedLeague(@Param("userId") int userID);
+    
+    @Query(name = "UserLeague.findByLeagueId")
+    public List<UserLeague> getUsers(@Param("leagueId") int leagueId);
+
+    @Query(value = "select l.row_number "
+            + "from (select *, ROW_NUMBER() OVER(order by score DESC) from user_league "
+            + "where league_id = :leagueId "
+            + "order by score DESC) l "
+            + "where user_id = :userId",
+            nativeQuery = true)
+    public Integer getRank(@Param("userId") int userID, @Param("leagueId") int leagueId);
+
 }

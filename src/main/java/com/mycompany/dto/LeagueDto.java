@@ -16,8 +16,9 @@ public class LeagueDto implements Serializable {
     private Integer leagueId;
     private String name;
     private String code;
-    private Integer userCount;
-    private int ownerId;
+    private Integer ownerId;
+    private Integer score;
+    private Integer rank;
 
     public LeagueDto() {
     }
@@ -50,19 +51,28 @@ public class LeagueDto implements Serializable {
         this.code = code;
     }
 
-    public Integer getUserCount() {
-        return userCount;
-    }
-
-    public void setUserCount(Integer userCount) {
-        this.userCount = userCount;
-    }
-
-    public int getOwnerId() {
+    public Integer getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(int ownerId) {
+    public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
 }

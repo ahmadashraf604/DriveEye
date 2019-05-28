@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.repository.query.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,38 +60,72 @@ public class UserLeagueContoller {
         }
     }
 
+    @DeleteMapping("delete/{LeagueID}/{userID}")
+    public Response<?> deleteUserLeage(@PathVariable int LeagueID, @PathVariable int userID) {
+        UserLeaguePK userLeaguePK = new UserLeaguePK();
+        userLeaguePK.setLeagueId(LeagueID);
+        userLeaguePK.setUserId(userID);
+        if (userLeagueDao.existsById(userLeaguePK)) {
+            UserLeague userLeague = userLeagueDao.findById(userLeaguePK).get();
+            if (userLeague != null) {
+                userLeagueDao.delete(userLeague);
+                return new Response<>(true, "delete successfully");
+            }
+        }
+        return new Response<>(false, "no such league with user");
+    }
+
     @GetMapping("subscribed/{userID}")
     public Response<?> getSubscrubesLeague(@PathVariable int userID) {
         List<UserLeague> userLeagues = userLeagueDao.getSubscribedLeague(userID);
         if (userLeagues.size() > 0) {
-            List<UserLeagueDto> userLeagueDtos = new ArrayList<>();
+            List<LeagueDto> leagueDtos = new ArrayList<>();
             for (UserLeague userLeague : userLeagues) {
+                leagueDtos.add(convertLeagueToDto(userLeague, userID));
+            }
+            return new Response<>(true, leagueDtos);
+        }
+        return new Response<>(true, "no subscribed league");
+    }
+    
+    @GetMapping("getUsers/{leagueID}")
+    public Response<?> getUsers(@PathVariable int leagueID) {
+        League league = leagueController.isLeagueExisted(leagueID);
+        if(league != null){
+            List<UserLeague> userLeagues = userLeagueDao.getUsers(leagueID);
+            List<UserLeagueDto> userLeagueDtos = new ArrayList<>();
+            for(UserLeague userLeague: userLeagues){
                 UserLeagueDto userLeagueDto = new UserLeagueDto();
-                League league = userLeague.getLeague();
-                LeagueDto leagueDto = new LeagueDto();
-                leagueDto.setCode(league.getCode());
-                leagueDto.setLeagueId(league.getLeagueId());
-                leagueDto.setName(league.getName());
-                leagueDto.setOwnerId(league.getOwnerId().getUserId());
-                leagueDto.setUserCount(league.getUserCount());
-               
                 userLeagueDto.setScore(userLeague.getScore());
-                userLeagueDto.setLeague(leagueDto);
+                userLeagueDto.setUsername(userLeague.getUser().getFirstName()+" "+userLeague.getUser().getLastName());
+                userLeagueDto.setUserID(userLeague.getUser().getUserId());
+                userLeagueDto.setRank(userLeagueDao.getRank(userLeague.getUser().getUserId(), leagueID));
                 userLeagueDtos.add(userLeagueDto);
             }
             return new Response<>(true, userLeagueDtos);
         }
-        return new Response<>(true, "no subscribed league");
+        return new Response<>(false, "no such league");
     }
 
     // check league if  user was subscribed in this league
     public boolean isSubscribed(int leagueId, int userId) {
         return userLeagueDao.findUserLeague(userId, leagueId) != null;
-
     }
 
     // truncate all leaguesfrom db  in the end of the season 
     public void seleteAll() {
         userLeagueDao.deleteAll();
+    }
+
+    private LeagueDto convertLeagueToDto(UserLeague userLeague, int userID) {
+        League league = userLeague.getLeague();
+        LeagueDto leagueDto = new LeagueDto();
+        leagueDto.setCode(league.getCode());
+        leagueDto.setLeagueId(league.getLeagueId());
+        leagueDto.setName(league.getName());
+        leagueDto.setOwnerId(league.getOwnerId().getUserId());
+        leagueDto.setScore(userLeague.getScore());
+        leagueDto.setRank(userLeagueDao.getRank(userID, league.getLeagueId()));
+        return leagueDto;
     }
 }
