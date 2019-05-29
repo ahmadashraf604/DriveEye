@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\ITI\project\DriveEye\src\main\java\com\mycompany\dao\UserSeasonDao.java
 D:\ITI\project\DriveEye\src\main\java\com\mycompany\controller\UserController.java
 D:\ITI\project\DriveEye\src\main\java\com\mycompany\bean\User.java
@@ -50,3 +51,57 @@ D:\ITI\project\DriveEye\src\main\java\com\mycompany\controller\BadgeController.j
 D:\ITI\project\DriveEye\src\main\java\com\mycompany\dao\BadgeDao.java
 D:\ITI\project\DriveEye\src\main\java\com\mycompany\dto\UserDto.java
 D:\ITI\project\DriveEye\src\main\java\com\mycompany\bean\Car.java
+=======
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\CityDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\UserLeagueDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\Badge.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\UserLeagueDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\CityContoller.java
+D:\ITI Courses\Project\DriveEye\src\main\java\utils\Constants.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\UserLeaguePK.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\SeasonDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\LeagueDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\TripDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\UserSeasonBadgeDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\driveeye\DriveEyeApplication.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\UserDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonBadge.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\Trip.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\SeasonController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\CoachingContoller.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\TripController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\UserSeasonBadgeDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\BadgeController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\UserSeasonDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\UserDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\LeagueController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\CarDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\SeasonDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\CoachingDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\UserSeason.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\UserSeasonDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\UserSeasonController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\BadgeDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\LeagueDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\UserLeagueContoller.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\utill\Response.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\UserLeague.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dao\BadgeDao.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\UserController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\TripDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\CityDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\User.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonBadgePK.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\Season.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\Car.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\UserSeasonPK.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\City.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\League.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\CarController.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\CarDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\driveeye\ServletInitializer.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\utill\ErrorReport.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\dto\CoachingDto.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\bean\Coaching.java
+D:\ITI Courses\Project\DriveEye\src\main\java\com\mycompany\controller\UserSeasonBadgeController.java
+>>>>>>> 6c75c537a5ca5ef4ecd5d022d4cd3124c2b21d44

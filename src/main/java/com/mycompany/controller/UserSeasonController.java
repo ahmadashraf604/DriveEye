@@ -10,12 +10,17 @@ import com.mycompany.bean.UserSeason;
 import com.mycompany.dao.SeasonDao;
 import com.mycompany.dao.UserDao;
 import com.mycompany.dao.UserSeasonDao;
+import com.mycompany.dto.SeasonDto;
+import com.mycompany.dto.UserSeasonDto;
 import com.mycompany.utill.Response;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,20 +31,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/userSeason")
 public class UserSeasonController {
-    
+
     @Autowired
     private UserSeasonDao userSeasonDao;
-    
+
     @Autowired
     private UserDao userDao;
-    
+
     @Autowired
     private SeasonDao seasonDao;
 
     public void setUserSeasonDao(UserSeasonDao userSeasonDao) {
         this.userSeasonDao = userSeasonDao;
     }
-    
+
     @GetMapping("/getUsers")
     public Response<?> getUsers() {
         Iterable<User> users = userDao.findAll();
@@ -50,10 +55,10 @@ public class UserSeasonController {
         }
 
     }
-    
-     @GetMapping("/getScore")
+
+    @GetMapping("/getScore")
     public Response<?> score(@Param("user_id") Integer userId, @Param("season_id") Integer seasonId) {
-         List<UserSeason> score = userSeasonDao.getUserScore(userId , seasonId);
+        List<UserSeason> score = userSeasonDao.getUserScore(userId, seasonId);
         if (score.iterator().hasNext()) {
 
             List<UserSeason> userSeasons = new ArrayList<>();
@@ -63,7 +68,7 @@ public class UserSeasonController {
                 us.setScore(s.getScore());
                 us.setTripCount(s.getTripCount());
                 //us.setUserSeasonPK(s.getUserSeasonPK());
-                
+
                 userSeasons.add(us);
             }
 
@@ -74,19 +79,31 @@ public class UserSeasonController {
         }
 
     }
-    
-    @GetMapping("/userSeasons")
-    public Response<?> getUserSeasons(@Param("userId") Integer userId) {
-      
-      List<UserSeason> seasons = userSeasonDao.getUserSeasons(userId);
+
+    @GetMapping("/userSeasons/{userId}")
+    public Response<?> getUserSeasons(@PathVariable("userId") Integer userId) {
+
+        List<UserSeason> seasons = userSeasonDao.getUserSeasons(userId);
         if (seasons.iterator().hasNext()) {
 
-            List<UserSeason> userSeasons = new ArrayList<>();
+            List<SeasonDto> userSeasons = new ArrayList<>();
             for (UserSeason s : seasons) {
-                UserSeason season = new UserSeason();
-                season.setSeason(s.getSeason());
-                season.setUserSeasonPK(s.getUserSeasonPK());
-                
+                List<UserSeason> seasonScores = userSeasonDao.getSeasonScoreOrderd(s.getSeason().getSeasonId());
+                int seasonHighScore = 0;
+                int myRank = 0;
+                if (seasonScores.size() > 0) {
+                    seasonHighScore = seasonScores.get(0).getScore();
+                    myRank = seasonScores.indexOf(s) + 1;
+                }
+                SeasonDto season = new SeasonDto(
+                        s.getSeason().getSeasonId(),
+                        s.getSeason().getStartDate(),
+                        s.getSeason().getEndDate(),
+                        seasonHighScore,
+                        s.getScore(),
+                        myRank
+                );
+
                 userSeasons.add(season);
             }
 
@@ -95,6 +112,31 @@ public class UserSeasonController {
         } else {
             return new Response<>(false, "no Seasons for this user");
         }
+    }
+
+    @GetMapping("/seasonUsers/{seasonId}")
+    public Response<?> getSeasonUsers(@PathVariable("seasonId") Integer seasonId) {
+
+        if (seasonDao.existsById(seasonId)) {
+//            Collection<UserSeason> seasons = seasonDao.findById(seasonId).get().getUserSeasonCollection();
+            List<UserSeason> seasonUsers = userSeasonDao.getSeasonScoreOrderd(seasonId);
+            if (seasonUsers.iterator().hasNext()) {
+                List<UserSeasonDto> seasonUsersDTOS = new ArrayList<>();
+                int rank = 1;
+                for (UserSeason s : seasonUsers) {
+                    UserSeasonDto season = new UserSeasonDto(
+                            s.getUser().getUserId(),
+                            s.getUser().getFirstName() + " " + s.getUser().getLastName(),
+                            s.getScore(),
+                            rank
+                    );
+                    seasonUsersDTOS.add(season);
+                    rank++;
+                }
+                return new Response<>(true, seasonUsersDTOS);
+            }
+        }
+        return new Response<>(false, "no Seasons for this user");
 
     }
 }

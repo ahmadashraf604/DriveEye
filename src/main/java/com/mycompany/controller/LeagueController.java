@@ -3,14 +3,18 @@ package com.mycompany.controller;
 import com.mycompany.bean.League;
 import com.mycompany.bean.User;
 import com.mycompany.dao.LeagueDao;
-import com.mycompany.dao.UserDao;
+import com.mycompany.dto.LeagueDto;
 import com.mycompany.utill.Response;
-import org.jboss.logging.Param;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("league")
@@ -20,30 +24,66 @@ public class LeagueController {
 
     @Autowired
     LeagueDao leagueDao;
-    @Autowired
-    UserDao userDao;
 
-    @GetMapping("create")
-    public Response<?> createNewLege(@Param String name) {
-        League league = new League();
-        league.setName(name);
-        league.setCode(getRandomCode(6));
-        User user = userDao.findById(1).get();
-        league.setOwnerId(user);
-        leagueDao.save(league);
-        return new Response<>(true, " league created successeully with code " + league.getCode());
+    @Autowired
+    UserController userController;
+
+    @Autowired
+    UserLeagueContoller userLeagueContoller;
+
+    @PostMapping("add")
+    public Response<?> addLeague(@Param("name") String name, @Param("ownerId") int ownerId) {
+        User user = userController.existUserById(ownerId);
+        if (user != null) {
+            League league = new League();
+            league.setName(name);
+            league.setCode(getRandomCode(6));
+            league.setOwnerId(user);
+            League savedLeague = leagueDao.save(league);
+            if (savedLeague != null) {
+                userLeagueContoller.subscribe(savedLeague.getCode(), ownerId);
+                return new Response<>(true, convertLeagueToDto(savedLeague));
+            }
+            return new Response<>(false, "canot save league");
+        } else {
+            return new Response<>(false, "user isn't found");
+        }
     }
 
     @GetMapping("getAll")
     public Response<?> getAllLeague() {
-        System.out.println("getAll method");
         Iterable<League> leagues = leagueDao.findAll();
+        List<LeagueDto> leagueDtos = new ArrayList<>();
         if (leagues.iterator().hasNext()) {
-            return new Response<>(true, leagues);
-
+            for (League league : leagues) {
+                leagueDtos.add(convertLeagueToDto(league));
+            }
+            return new Response<>(true, leagueDtos);
         } else {
-            return new Response<>(false, "no cities found ");
+            return new Response<>(false, "no leagues found");
         }
+    }
+
+    @DeleteMapping("delete/{leagueId}")
+    public Response<?> deleteUserLeage(@PathVariable int leagueId) {
+        League league = isLeagueExisted(leagueId);
+        if (league != null) {
+            leagueDao.delete(league);
+            return new Response<>(true, "delete successfully");
+        }
+        return new Response<>(false, "no such league");
+    }
+
+    private LeagueDto convertLeagueToDto(League savedLeague) {
+        LeagueDto leagueDto = new LeagueDto();
+        leagueDto.setCode(savedLeague.getCode());
+        leagueDto.setLeagueId(savedLeague.getLeagueId());
+        leagueDto.setName(savedLeague.getName());
+        leagueDto.setOwnerId(savedLeague.getOwnerId().getUserId());
+        leagueDto.setName(savedLeague.getName());
+        leagueDto.setScore(0);
+        leagueDto.setRank(1);
+        return leagueDto;
     }
 
     // generate random key for league code 
@@ -58,6 +98,12 @@ public class LeagueController {
 
     public League isLeagueExisted(String code) {
         return leagueDao.findLeagueByCode(code);
+    }
 
+    public League isLeagueExisted(int leagueID) {
+        if (leagueDao.existsById(leagueID)) {
+            return leagueDao.findById(leagueID).get();
+        }
+        return null;
     }
 }

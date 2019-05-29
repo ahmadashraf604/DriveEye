@@ -61,12 +61,12 @@ public class Season implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date endDate;
     @OneToMany(mappedBy = "seasonId")
-    
-      @JsonIgnore
+
+    @JsonIgnore
     private Collection<Trip> tripCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
-        private Collection<UserSeason> userSeasonCollection;
+    private Collection<UserSeason> userSeasonCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
     private Collection<UserSeasonBadge> userSeasonBadgeCollection;

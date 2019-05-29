@@ -60,7 +60,7 @@ public class CarController {
 
     }
 
-    @GetMapping("/add")
+    @GetMapping("/add/{id}")
     public Response<?> addCar(@Param String brand, @Param String model) {
         Car car = new Car();
         car.setBrand(brand);

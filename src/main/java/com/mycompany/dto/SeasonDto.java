@@ -17,18 +17,17 @@ public class SeasonDto implements Serializable {
     private Integer seasonId;
     private Date startDate;
     private Date endDate;
+    private Integer highScore;
+    private Integer myScore;
+    private Integer myRank;
 
-    public SeasonDto() {
-    }
-
-    public SeasonDto(Integer seasonId) {
-        this.seasonId = seasonId;
-    }
-
-    public SeasonDto(Integer seasonId, Date startDate, Date endDate) {
+    public SeasonDto(Integer seasonId, Date startDate, Date endDate, Integer highScore, Integer myScore, Integer myRank) {
         this.seasonId = seasonId;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.highScore = highScore;
+        this.myScore = myScore;
+        this.myRank = myRank;
     }
 
     public Integer getSeasonId() {
@@ -54,6 +53,32 @@ public class SeasonDto implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public Integer getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(Integer highScore) {
+        this.highScore = highScore;
+    }
+
+    public Integer getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(Integer myScore) {
+        this.myScore = myScore;
+    }
+
+    public Integer getMyRank() {
+        return myRank;
+    }
+
+    public void setMyRank(Integer myRank) {
+        this.myRank = myRank;
+    }
+
+    
 
     @Override
     public int hashCode() {

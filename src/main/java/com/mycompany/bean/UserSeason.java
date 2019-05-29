@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UserSeason.findAll", query = "SELECT u FROM UserSeason u")
     , @NamedQuery(name = "UserSeason.findByUserSeasonId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userSeasonId = :userSeasonId")
     , @NamedQuery(name = "UserSeason.findBySeasonId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.seasonId = :seasonId")
+    , @NamedQuery(name = "UserSeason.findBySeasonIdWithOrder", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.seasonId = :seasonId ORDER BY u.score DESC")
     , @NamedQuery(name = "UserSeason.findBySeasonIdAndUserId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userId = :userId AND u.userSeasonPK.seasonId = :seasonId")
     , @NamedQuery(name = "UserSeason.findByUserId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userId = :userId")                                                         
     , @NamedQuery(name = "UserSeason.findByScore", query = "SELECT u FROM UserSeason u WHERE u.score = :score")

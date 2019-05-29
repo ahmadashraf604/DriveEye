@@ -5,40 +5,46 @@
  */
 package com.mycompany.dto;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Ashraf_R
  */
-public class UserLeagueDto implements Serializable {
+public class UserLeagueDto {
+    
+    private int score;
+    private String username;
+    private int rank;
+    private int UserID;
 
-    private Integer score;
-    private LeagueDto league;
-
-    public UserLeagueDto() {
-    }
-
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public LeagueDto getLeague() {
-        return league;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLeague(LeagueDto league) {
-        this.league = league;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-
-    @Override
-    public String toString() {
-        return "com.mycompany.dto.UserLeague[  ]";
+    public int getRank() {
+        return rank;
     }
-    
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
+    }
 }
