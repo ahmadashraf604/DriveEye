@@ -5,8 +5,10 @@
  */
 package com.mycompany.controller;
 
+import com.mycompany.bean.Season;
 import com.mycompany.bean.User;
 import com.mycompany.bean.UserSeason;
+import com.mycompany.bean.UserSeasonPK;
 import com.mycompany.dao.SeasonDao;
 import com.mycompany.dao.UserDao;
 import com.mycompany.dao.UserSeasonDao;
@@ -15,13 +17,16 @@ import com.mycompany.dto.UserSeasonDto;
 import com.mycompany.utill.Response;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,6 +48,31 @@ public class UserSeasonController {
 
     public void setUserSeasonDao(UserSeasonDao userSeasonDao) {
         this.userSeasonDao = userSeasonDao;
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public Response<?> addUserSeason(@Param("user_id") Integer userId, @Param("season_id") Integer seasonId,
+            @Param("score") Integer score) {
+        if (userDao.existsById(userId)) {
+
+            if (seasonDao.existsById(seasonId)) {
+                UserSeason userSeason = new UserSeason();
+                userSeason.setScore(score);
+                userSeason.setTripCount(0);
+                userSeason.setUser(userDao.findById(userId).get());
+                userSeason.setSeason(seasonDao.findById(seasonId).get());
+                UserSeasonPK pK = new UserSeasonPK();
+                pK.setSeasonId(seasonId);
+                pK.setUserId(userId);
+                userSeason.setUserSeasonPK(pK);
+                userSeasonDao.save(userSeason);
+
+                return new Response<>(true, userSeason);
+                // return new Response<>(true, "Season added sucessfully");
+            }
+        }
+        return new Response<>(false, "ERROR");
+
     }
 
     @GetMapping("/getUsers")
