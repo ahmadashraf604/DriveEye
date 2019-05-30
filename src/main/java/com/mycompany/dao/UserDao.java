@@ -24,14 +24,14 @@ public interface UserDao extends CrudRepository<User, Integer> {
     @Query(name = "User.login")
     User findUserByEmail(@Param("email") String email,@Param("password") String password);
     
-    @Transactional
-    @Modifying
-       @Query(value = "update User u set u.first_name = :firsNtame and,"
-               + "u.last_name = :lastName and,"
-               + "u.email = :email and,u.city = :city and,"
-               + "u.password = :password and,u.image = :image where user_id = :userId", nativeQuery = true)
-    void updateUser(@Param("firstName") String fName , @Param("lastName") String lName,
-            @Param("email") String email ,@Param("cityId") Integer cityId,@Param("image") Byte image,
-            @Param("password") String password , @Param("user_id") Integer userId);
-    
+//    @Transactional
+//    @Modifying
+//       @Query(value = "update User u set u.first_name = :firsNtame and,"
+//               + "u.last_name = :lastName and,"
+//               + "u.email = :email and,u.city = :city and,"
+//               + "u.password = :password and,u.image = :image where user_id = :userId", nativeQuery = true)
+//    void updateUser(@Param("firstName") String fName , @Param("lastName") String lName,
+//            @Param("email") String email ,@Param("cityId") Integer cityId,@Param("image") Byte image,
+//            @Param("password") String password , @Param("user_id") Integer userId);
+//    
 }
