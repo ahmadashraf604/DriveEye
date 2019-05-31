@@ -63,7 +63,7 @@ public class TripController {
 
     @PostMapping("/add")
     public Response<?> add(@Param("startPoint") String startPoint, @Param("endtPoint") String endtPoint,
-            @Param("duration") double duration, @Param("userId") int userId,@Param("score") int score ) {
+            @Param("duration") Double duration, @Param("userId") int userId,@Param("score") int score ) {
         Trip trip = new Trip();
         trip.setTripId(getRandomId());
         trip.setDuration(duration);
