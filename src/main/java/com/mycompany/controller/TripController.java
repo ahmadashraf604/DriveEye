@@ -62,16 +62,23 @@ public class TripController {
     }
 
     @PostMapping("/add")
-    public Response<?> add(
-            @Param("startPoint") String startPoint,
-            @Param("endtPoint") String endtPoint,
-            @Param("duration") double duration,
-            @Param("userId") int userId) {
+    public Response<?> add(@Param("startPoint") String startPoint, @Param("endtPoint") String endtPoint,
+            @Param("duration") double duration, @Param("userId") int userId,@Param("score") int score ) {
         Trip trip = new Trip();
+        trip.setTripId(getRandomId());
         trip.setDuration(duration);
         trip.setStartPoint(startPoint);
         trip.setEndPoint(endtPoint);
-        trip.setUserId(userController.existUserById(userId));
+        System.out.println("startPoint" + startPoint
+                + "endtPoint " + endtPoint
+                + "duration " + duration
+                + "userId " + userId);
+        System.out.println("score : " + score);
+        try {
+            trip.setUserId(userController.existUserById(userId));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         Trip savedTrip = tripDao.save(trip);
         if (savedTrip != null) {
@@ -95,5 +102,13 @@ public class TripController {
             return tripDao.findById(tripId).get();
         }
         return null;
+    }
+
+    public int getRandomId() {
+        double randomDouble = Math.random() + Math.random() + Math.random();
+        randomDouble = randomDouble * 5547;
+        int randomInt = (int) randomDouble;
+
+        return randomInt;
     }
 }

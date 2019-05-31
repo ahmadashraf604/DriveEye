@@ -131,7 +131,7 @@ public class UserController {
         user.setPassword(user.getPassword());
         //user.setCityId(user.getCityId().getName());
         
-        userDao.updateUser(fName, lName, email, id, Byte.MIN_VALUE, password, id);
+//        userDao.updateUser(fName, lName, email, id, Byte.MIN_VALUE, password, id);
         
        return new Response<>(true, "car updated sucessfully");
     }
