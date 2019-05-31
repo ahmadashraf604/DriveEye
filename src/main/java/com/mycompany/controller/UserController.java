@@ -5,6 +5,7 @@
  */
 package com.mycompany.controller;
 
+import com.mycompany.bean.Car;
 import com.mycompany.utill.Response;
 import com.mycompany.utill.ErrorReport;
 import com.mycompany.dao.UserDao;
@@ -12,6 +13,8 @@ import com.mycompany.bean.User;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import java.util.Optional;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -110,5 +114,25 @@ public class UserController {
             return userDao.findById(userId).get();
         }
         return null;
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    //@GetMapping(value= "edit/{id}")
+     public Response<?> updateUser(@PathVariable String fName,@PathVariable String lName,
+             @PathVariable String email,@PathVariable Byte image,@PathVariable String password, @PathVariable Integer id){
+            User user = new User();
+        Optional<User> u = userDao.findById(id);
+//        if(car.getCarId().equals(id)){
+        
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
+        user.setImage(user.getImage());
+        user.setEmail(user.getEmail());
+        user.setPassword(user.getPassword());
+        //user.setCityId(user.getCityId().getName());
+        
+//        userDao.updateUser(fName, lName, email, id, Byte.MIN_VALUE, password, id);
+        
+       return new Response<>(true, "car updated sucessfully");
     }
 }

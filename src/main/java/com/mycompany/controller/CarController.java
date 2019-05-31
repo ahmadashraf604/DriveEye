@@ -60,7 +60,7 @@ public class CarController {
 
     }
 
-    @GetMapping("/add")
+    @GetMapping("/add/{id}")
     public Response<?> addCar(@Param String brand, @Param String model) {
         Car car = new Car();
         car.setBrand(brand);
@@ -131,6 +131,7 @@ public class CarController {
         car.getModel();
         car.setBrand(car.getBrand());
         car.setModel(car.getModel());
+        car.setReleaseyear(car.getReleaseyear());
         carDao.updateCar(brand,model,id);
         
        return new Response<>(true, "car updated sucessfully");
