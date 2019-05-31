@@ -50,7 +50,7 @@ public class TripController {
     }
 
     @GetMapping("/get/{userId}")
-    public Response<?> findByUserId(@PathVariable int userId) {
+    public Response<?> findByUserId(@PathVariable Integer userId) {
         if (userController.existUserById(userId) != null) {
             Iterable<Trip> trips = tripDao.findAll();
             if (trips.iterator().hasNext()) {
@@ -63,7 +63,7 @@ public class TripController {
 
     @PostMapping("/add")
     public Response<?> add(@Param("startPoint") String startPoint, @Param("endtPoint") String endtPoint,
-            @Param("duration") Double duration, @Param("userId") int userId,@Param("score") int score ) {
+            @Param("duration") Double duration, @Param("userId") int userId,@Param("score") Integer score ) {
         Trip trip = new Trip();
         trip.setTripId(getRandomId());
         trip.setDuration(duration);
@@ -87,8 +87,8 @@ public class TripController {
         return new Response<>(false, "add falid");
     }
 
-    @DeleteMapping("/{tripId}")
-    public Response<?> delete(@PathVariable int tripId) {
+    @DeleteMapping("/delete/{tripId}")
+    public Response<?> delete(@PathVariable Integer tripId) {
         Trip trip = findTripById(tripId);
         if (trip != null) {
             tripDao.delete(trip);
