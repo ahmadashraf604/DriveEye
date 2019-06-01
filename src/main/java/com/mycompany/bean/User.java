@@ -79,7 +79,7 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "password")
     private String password;
-    @Lob
+//    @Lob
     @Column(name = "image")
     private byte[] image;
     @JsonIgnore
@@ -231,7 +231,7 @@ public class User implements Serializable {
     public void setCarId(Car carId) {
         this.carId = carId;
     }
-    @JsonIgnore
+    
     public City getCityId() {
         return cityId;
     }
