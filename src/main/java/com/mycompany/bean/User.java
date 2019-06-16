@@ -79,7 +79,8 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "password")
     private String password;
-//    @Lob
+    
+    @Lob
     @Column(name = "image")
     private byte[] image;
     @JsonIgnore
