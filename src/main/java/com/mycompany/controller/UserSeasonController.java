@@ -169,4 +169,8 @@ public class UserSeasonController {
         return new Response<>(false, "no Seasons for this user");
 
     }
+
+    void increaseScore(User user, Integer score) {
+       userSeasonDao.increaseScore(score, user);
+    }
 }

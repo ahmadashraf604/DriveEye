@@ -128,4 +128,8 @@ public class UserLeagueContoller {
         leagueDto.setRank(userLeagueDao.getRank(userID, league.getLeagueId()));
         return leagueDto;
     }
+    
+    public void increaseScore(User user, int score){
+        userLeagueDao.increaseScore(score, user);
+    }
 }

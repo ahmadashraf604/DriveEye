@@ -5,9 +5,12 @@
  */
 package com.mycompany.dao;
 
+import com.mycompany.bean.User;
 import com.mycompany.bean.UserLeague;
 import com.mycompany.bean.UserLeaguePK;
 import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -25,7 +28,7 @@ public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK> 
 
     @Query(name = "UserLeague.findByUserId")
     public List<UserLeague> getSubscribedLeague(@Param("userId") int userID);
-    
+
     @Query(name = "UserLeague.findByLeagueId")
     public List<UserLeague> getUsers(@Param("leagueId") int leagueId);
 
@@ -37,4 +40,8 @@ public interface UserLeagueDao extends CrudRepository<UserLeague, UserLeaguePK> 
             nativeQuery = true)
     public Integer getRank(@Param("userId") int userID, @Param("leagueId") int leagueId);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update UserLeague ul set ul.score = (select u.score from UserLeague u where u.user = ul.user AND u.league = ul.league ) + :score where ul.user = :user")
+    public void increaseScore(@Param("score") Integer score, @Param("user") User user);
 }

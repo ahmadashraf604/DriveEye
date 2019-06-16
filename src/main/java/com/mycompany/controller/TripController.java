@@ -6,6 +6,7 @@
 package com.mycompany.controller;
 
 import com.mycompany.bean.Trip;
+import com.mycompany.bean.User;
 import com.mycompany.dao.TripDao;
 import com.mycompany.utill.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class TripController {
 
     @Autowired
     UserController userController;
+
+    @Autowired
+    UserLeagueContoller userLeagueContoller;
+
+    @Autowired
+    UserSeasonController userSeasonController;
 
     public void setTripDao(TripDao tripDao) {
         this.tripDao = tripDao;
@@ -62,29 +69,29 @@ public class TripController {
     }
 
     @PostMapping("/add")
-    public Response<?> add(@Param("startPoint") String startPoint, @Param("endPoint") String endtPoint,
-            @Param("duration") Double duration, @Param("userId") Integer userId,@Param("score") Integer score ) {
-        Trip trip = new Trip();
-        trip.setTripId(getRandomId());
-        trip.setDuration(duration);
-        trip.setStartPoint(startPoint);
-        trip.setEndPoint(endtPoint);
-        System.out.println("startPoint" + startPoint
-                + "endtPoint " + endtPoint
-                + "duration " + duration
-                + "userId " + userId);
-        System.out.println("score : " + score);
-        try {
-            trip.setUserId(userController.existUserById(userId));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public Response<?> add(@Param("startPoint") String startPoint,
+            @Param("endPoint") String endPoint,
+            @Param("duration") Double duration,
+            @Param("userId") Integer userId,
+            @Param("score") Integer score) {
 
-        Trip savedTrip = tripDao.save(trip);
-        if (savedTrip != null) {
-            return new Response<>(true, "add sucessfully");
+        User user = userController.existUserById(userId);
+        if (user != null) {
+            Trip trip = new Trip();
+            trip.setTripId(getRandomId());
+            trip.setDuration(duration);
+            trip.setStartPoint(startPoint);
+            trip.setEndPoint(endPoint);
+            trip.setUserId(user);
+            Trip savedTrip = tripDao.save(trip);
+            if (savedTrip != null) {
+                userLeagueContoller.increaseScore(user, score);
+                userSeasonController.increaseScore(user, score);
+                return new Response<>(true, "add sucessfully");
+            }
+            return new Response<>(false, "add falid");
         }
-        return new Response<>(false, "add falid");
+        return new Response<>(false, "user ID doesn't exist");
     }
 
     @DeleteMapping("/delete/{tripId}")
