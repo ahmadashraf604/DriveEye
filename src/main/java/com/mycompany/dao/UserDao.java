@@ -5,6 +5,7 @@
  */
 package com.mycompany.dao;
 
+import com.mycompany.bean.Car;
 import com.mycompany.bean.User;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,6 +24,11 @@ public interface UserDao extends CrudRepository<User, Integer> {
 //    @Query(value = "SELECT u FROM User u where u.email = :email and u.password = :password")
     @Query(name = "User.login")
     User findUserByEmail(@Param("email") String email,@Param("password") String password);
+    
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(name = "User.updateCarInfo", nativeQuery = true)
+    int updateUserCarId(@Param("userId") Integer userId, @Param("carId") Car carId);
     
 //    @Transactional
 //    @Modifying
