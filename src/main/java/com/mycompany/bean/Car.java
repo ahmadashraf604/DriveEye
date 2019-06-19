@@ -46,17 +46,17 @@ public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "car_id")
-    @NotNull
+//    @NotNull
     private Integer carId;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "brand")
     private String brand;
     @Size(max = 45)
     @Column(name = "model")
     private String model;
-    @Lob
+//    @Lob
     @Column(name = "image")
     private byte[] image;
     @Column(name = "release_year")

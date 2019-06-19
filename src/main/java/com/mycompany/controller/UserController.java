@@ -36,7 +36,7 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
-    
+
     @Autowired
     private CityContoller cityContoller;
 
@@ -109,30 +109,30 @@ public class UserController {
         }
 
     }
+
     public User existUserById(int userId) {
         if (userDao.existsById(userId)) {
             return userDao.findById(userId).get();
         }
         return null;
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     //@GetMapping(value= "edit/{id}")
-     public Response<?> updateUser(@PathVariable String fName,@PathVariable String lName,
-             @PathVariable String email,@PathVariable Byte image,@PathVariable String password, @PathVariable Integer id){
-            User user = new User();
+    public Response<?> updateUser(@PathVariable String fName, @PathVariable String lName,
+            @PathVariable String email, @PathVariable Byte image, @PathVariable String password, @PathVariable Integer id) {
+        User user = new User();
         Optional<User> u = userDao.findById(id);
 //        if(car.getCarId().equals(id)){
-        
+
         user.setFirstName(user.getFirstName());
         user.setLastName(user.getLastName());
         user.setImage(user.getImage());
         user.setEmail(user.getEmail());
         user.setPassword(user.getPassword());
         //user.setCityId(user.getCityId().getName());
-        
+
 //        userDao.updateUser(fName, lName, email, id, Byte.MIN_VALUE, password, id);
-        
-       return new Response<>(true, "car updated sucessfully");
+        return new Response<>(true, "car updated sucessfully");
     }
 }
