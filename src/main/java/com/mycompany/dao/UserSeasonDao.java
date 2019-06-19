@@ -34,7 +34,7 @@ public interface UserSeasonDao extends CrudRepository<UserSeason, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update UserSeason ul set ul.score = (select u.score from UserSeason u where u.user = ul.user AND u.season.seasonId = (SELECT MAX(s.seasonId) FROM Season s )) + :score where ul.user = :user")
+    @Query(value = "update UserSeason ul set ul.score = (select u.score from UserSeason u where u.user = ul.user AND u.season.seasonId = (SELECT MAX(s.userSeasonPK.seasonId) FROM UserSeason s) ) + :score where ul.user = :user")
     public void increaseScore(@Param("score") Integer score, @Param("user") User user);
   
     @Query(name = "UserSeason.getUserSeasonScore")
