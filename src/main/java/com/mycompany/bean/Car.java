@@ -56,7 +56,7 @@ public class Car implements Serializable {
     @Size(max = 45)
     @Column(name = "model")
     private String model;
-//    @Lob
+    @Lob
     @Column(name = "image")
     private byte[] image;
     @Column(name = "release_year")
