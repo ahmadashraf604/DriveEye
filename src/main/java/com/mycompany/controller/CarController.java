@@ -6,9 +6,12 @@
 package com.mycompany.controller;
 
 import com.mycompany.bean.Car;
+import com.mycompany.bean.User;
 import com.mycompany.dao.CarDao;
+import com.mycompany.dao.UserDao;
 import com.mycompany.utill.Response;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.jboss.logging.Param;
@@ -25,13 +28,15 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Tahoon
  */
-
 @RestController
 @RequestMapping("/car")
 public class CarController {
 
     @Autowired
     private CarDao carDao;
+
+    @Autowired
+    private UserDao userDao;
 
 //   @Autowired
 //   private CarService carService;
@@ -61,12 +66,26 @@ public class CarController {
     }
 
     @GetMapping("/add/{id}")
-    public Response<?> addCar(@Param String brand, @Param String model) {
+    public Response<?> addCar(@PathVariable Integer id, @Param String brand, @Param String model) {
         Car car = new Car();
         car.setBrand(brand);
         car.setModel(model);
-        carDao.save(car);
-        return new Response<>(true, "car added sucessfully");
+        if (userDao.existsById(id)) {
+            Car savedCar = carDao.save(car);
+            System.out.println(savedCar.getCarId());
+            
+//            User oldUser = userDao.findById(id).get();
+//            
+//            oldUser.setCarId(savedCar);
+//            System.out.println(oldUser.getPassword());
+//            userDao.save(oldUser);
+            userDao.updateUserCarId(id, savedCar);
+            
+            return new Response<>(true, "car added and user updated correctly");
+        } else {
+            return new Response<>(true, "something went wrong");
+
+        }
 
     }
 
@@ -123,8 +142,8 @@ public class CarController {
 //    }
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     //@GetMapping(value= "edit/{id}")
-     public Response<?> updateCar(@Param Integer id,@Param String brand , @Param String model) {
-            Car car = new Car();
+    public Response<?> updateCar(@Param Integer id, @Param String brand, @Param String model) {
+        Car car = new Car();
         Optional<Car> c = carDao.findById(id);
 //        if(car.getCarId().equals(id)){
         car.getBrand();
@@ -132,9 +151,9 @@ public class CarController {
         car.setBrand(car.getBrand());
         car.setModel(car.getModel());
         car.setReleaseyear(car.getReleaseyear());
-        carDao.updateCar(brand,model,id);
-        
-       return new Response<>(true, "car updated sucessfully");
+        carDao.updateCar(brand, model, id);
+
+        return new Response<>(true, "car updated sucessfully");
     }
 
 }

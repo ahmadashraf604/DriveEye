@@ -46,10 +46,10 @@ public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "car_id")
-    @NotNull
+//    @NotNull
     private Integer carId;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "brand")
     private String brand;
