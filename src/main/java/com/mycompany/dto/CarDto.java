@@ -27,9 +27,10 @@ public class CarDto implements Serializable {
         this.carId = carId;
     }
 
-    public CarDto(Integer carId, String brand) {
+    public CarDto(Integer carId, String brand,String model ) {
         this.carId = carId;
         this.brand = brand;
+        this.model=model;
     }
 
     public Integer getCarId() {

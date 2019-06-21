@@ -25,9 +25,6 @@ public class UserSeasonDto implements Serializable {
         this.rank = rank;
     }
 
-    public UserSeasonDto() {
-    }
-
 
     public int getScore() {
         return score;

@@ -24,6 +24,11 @@ public class CityDto implements Serializable {
         this.cityId = cityId;
     }
 
+    public CityDto(Integer cityId, String name) {
+        this.cityId = cityId;
+        this.name = name;
+    }
+
     public Integer getCityId() {
         return cityId;
     }

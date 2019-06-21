@@ -5,7 +5,10 @@
  */
 package com.mycompany.dto;
 
+import com.mycompany.bean.UserSeasonBadge;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -22,12 +25,29 @@ public class UserDto implements Serializable {
     private Date birthdate;
     private Integer level;
     private String password;
-    private byte[] image;
+    private String image;
 
     private CarDto car;
     private CityDto city;
+    private ArrayList<UserSeasonBadgeDto> userSeasonBadgeCollection;
 
     public UserDto() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public ArrayList<UserSeasonBadgeDto> getUserSeasonBadgeCollection() {
+        return userSeasonBadgeCollection;
+    }
+
+    public void setUserSeasonBadgeCollection(ArrayList<UserSeasonBadgeDto> userSeasonBadgeCollection) {
+        this.userSeasonBadgeCollection = userSeasonBadgeCollection;
     }
 
     public UserDto(Integer userId) {
@@ -95,13 +115,6 @@ public class UserDto implements Serializable {
         this.password = password;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 
     public CarDto getCar() {
         return car;
@@ -143,5 +156,7 @@ public class UserDto implements Serializable {
     public String toString() {
         return "com.mycompany.dto.User[ userId=" + userId + " ]";
     }
+
+   
 
 }

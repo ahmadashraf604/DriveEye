@@ -14,9 +14,16 @@ import java.io.Serializable;
 public class BadgeDto implements Serializable {
 
     private Integer badgeId;
-     private byte[] image;
+    private String image;
     private String name;
     private String type;
+
+    public BadgeDto(Integer badgeId, String image, String name, String type) {
+        this.badgeId = badgeId;
+        this.image = image;
+        this.name = name;
+        this.type = type;
+    }
  
 
     public BadgeDto() {
@@ -24,6 +31,12 @@ public class BadgeDto implements Serializable {
 
     public BadgeDto(Integer badgeId) {
         this.badgeId = badgeId;
+    }
+
+    public BadgeDto(Integer badgeId, String name, String type) {
+         this.badgeId = badgeId;
+        this.name = name;
+        this.type = type;
     }
 
     public Integer getBadgeId() {
@@ -34,14 +47,15 @@ public class BadgeDto implements Serializable {
         this.badgeId = badgeId;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
+   
     public String getName() {
         return name;
     }

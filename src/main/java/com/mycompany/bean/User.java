@@ -93,12 +93,12 @@ public class User implements Serializable {
     private Collection<Trip> tripCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    
     private Collection<UserSeason> userSeasonCollection;
+    
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
-    
     private Collection<League> leagueCollection;
+    
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
     @ManyToOne
     private Car carId;
@@ -221,7 +221,6 @@ public class User implements Serializable {
     public void setLeagueCollection(Collection<League> leagueCollection) {
         this.leagueCollection = leagueCollection;
     }
-    @JsonIgnore
     public Car getCarId() {
         return carId;
     }

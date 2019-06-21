@@ -23,6 +23,11 @@ public class UserSeasonBadgeDto implements Serializable {
         return badge;
     }
 
+    public UserSeasonBadgeDto(BadgeDto badge) {
+        this.badge = badge;
+    }
+    
+
     public void setBadge(BadgeDto badge) {
         this.badge = badge;
     }

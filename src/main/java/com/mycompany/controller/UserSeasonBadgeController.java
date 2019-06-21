@@ -5,15 +5,27 @@
  */
 package com.mycompany.controller;
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
+import com.mycompany.bean.Badge;
+import com.mycompany.bean.User;
 import com.mycompany.bean.UserSeasonBadge;
 import com.mycompany.bean.UserSeasonBadgePK;
 import com.mycompany.dao.BadgeDao;
 import com.mycompany.dao.SeasonDao;
 import com.mycompany.dao.UserDao;
 import com.mycompany.dao.UserSeasonBadgeDao;
+import com.mycompany.dto.BadgeDto;
 import com.mycompany.utill.Response;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,19 +47,41 @@ public class UserSeasonBadgeController {
     private SeasonDao seasonDao;
     @Autowired
     private BadgeDao badgeDao;
+    
 
     public void setUserSeasonBadgeDao(UserSeasonBadgeDao userSeasonBadgeDao) {
         this.userSeasonBadgeDao = userSeasonBadgeDao;
     }
 
+    @Transactional
     @GetMapping("/{userId}")
     public Response<?> getUserBadgeInAllSeason(@PathVariable int userId) {
-        Iterable<UserSeasonBadge> iterable = userSeasonBadgeDao.findByUserId(userId);
-        if (iterable.iterator().hasNext()) {
-            return new Response<>(true, iterable);
+        Iterable<UserSeasonBadge> userSeasonBadges = userSeasonBadgeDao.findByUserId(userId);
+        List<BadgeDto> badges = new ArrayList<>();
+        if (userSeasonBadges.iterator().hasNext()) {
+            for (UserSeasonBadge userSeasonBadge : userSeasonBadges) {
+                BadgeDto badgeDto = new BadgeDto();
+                badgeDto.setBadgeId(userSeasonBadge.getBadge().getBadgeId());
+                badgeDto.setName(userSeasonBadge.getBadge().getName());
+                badgeDto.setType(userSeasonBadge.getBadge().getType());
+                badgeDto.setImage("/userBadge/image/" + userSeasonBadge.getBadge().getBadgeId());
+                badges.add(badgeDto);
+            }
+            return new Response<>(true, badges);
         } else {
             return new Response<>(false, "user not have badge");
         }
+    }
+
+    @GetMapping("/image/{badgeId}")
+    public ResponseEntity<ByteArrayResource> downloadBadgeImage(@PathVariable Integer badgeId) {
+        // Load file from database
+        Badge userSeasonBadge = badgeDao.findById(badgeId).get();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("image/jpeg"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + userSeasonBadge.getName() + "\"")
+                .body(new ByteArrayResource(userSeasonBadge.getImage()));
     }
 
     @GetMapping("/{userId}/{seasonId}")

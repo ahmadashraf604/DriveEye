@@ -10,33 +10,28 @@ import com.mycompany.utill.Response;
 import com.mycompany.utill.ErrorReport;
 import com.mycompany.dao.UserDao;
 import com.mycompany.bean.User;
-import java.io.IOException;
+import com.mycompany.bean.UserSeasonBadge;
+import com.mycompany.dto.BadgeDto;
+import com.mycompany.dto.CarDto;
+import com.mycompany.dto.CityDto;
+import com.mycompany.dto.UserDto;
+import com.mycompany.dto.UserSeasonBadgeDto;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -65,6 +60,37 @@ public class UserController {
         }
     }
 
+    @GetMapping("/info/{id}")
+    public Response<?> getUserInfo(@PathVariable int id) {
+
+        if (userDao.existsById(id)) {
+            User user = userDao.findById(id).get();
+            UserDto userDto = new UserDto();
+            userDto.setBirthdate(user.getBirthdate());
+            userDto.setFirstName(user.getFirstName());
+            userDto.setLastName(user.getLastName());
+            userDto.setLevel(user.getLevel());
+            userDto.setUserId(user.getUserId());
+            userDto.setEmail(user.getEmail());
+            userDto.setCar(new CarDto(user.getCarId().getCarId(), user.getCarId().getBrand(), user.getCarId().getModel()));
+            userDto.setCity(new CityDto(user.getCityId().getCityId(), user.getCityId().getName()));
+            Collection<UserSeasonBadge> userSeasonBadgeCollection = user.getUserSeasonBadgeCollection();
+            System.out.println(userSeasonBadgeCollection.size()+"size ");
+            ArrayList <UserSeasonBadgeDto> badgesList = new ArrayList<UserSeasonBadgeDto>();
+
+            for (UserSeasonBadge badge : userSeasonBadgeCollection) {
+                BadgeDto badgeDto = new BadgeDto(badge.getBadge().getBadgeId(),"/userBadge/image/" + badge.getBadge().getImage(),
+                        badge.getBadge().getName(), badge.getBadge().getType());
+                badgesList.add(new UserSeasonBadgeDto(badgeDto));
+            }
+            userDto.setUserSeasonBadgeCollection(badgesList);
+
+            return new Response<>(true, userDto);
+        } else {
+            return new Response<>(false, "user not found");
+        }
+    }
+
     @GetMapping("/getAll")
     public Response<?> getUsers() {
         Iterable<User> users = userDao.findAll();
@@ -79,7 +105,16 @@ public class UserController {
     public Response<?> login(@Param("email") String email, @Param("password") String password) {
         User user = userDao.findUserByEmail(email, password);
         if (user != null) {
-            return new Response<>(true, user);
+            UserDto userDto = new UserDto();
+            userDto.setUserId(user.getUserId());
+            userDto.setFirstName(user.getFirstName());
+            userDto.setLastName(user.getLastName());
+            userDto.setLevel(user.getLevel());
+            userDto.setEmail(user.getEmail());
+            userDto.setBirthdate(user.getBirthdate());
+            userDto.setCar(new CarDto(user.getCarId().getCarId()));
+            userDto.setCity(new CityDto(user.getCityId().getCityId(), user.getCityId().getName()));
+            return new Response<>(true, userDto);
         } else {
             return new Response<>(false, "invaild email or Password");
         }
@@ -146,32 +181,5 @@ public class UserController {
 
 //        userDao.updateUser(fName, lName, email, id, Byte.MIN_VALUE, password, id);
         return new Response<>(true, "car updated sucessfully");
-    }
-
-    @PostMapping("/uploadFile")
-    public Response uploadFile(@RequestParam("file") MultipartFile file) {
-
-        try {
-            userDao.updateImage(file.getBytes(), 1);
-        } catch (IOException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path("1")
-                .toUriString();
-
-        return new Response(true, fileDownloadUri + "\t" + file.getContentType() + "\t" + file.getSize());
-    }
-
-    @GetMapping("/downloadFile/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Integer userId) {
-        // Load file from database
-        User user = userDao.findById(userId).get();
-        
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("image/jpeg"))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + user.getFirstName() + "\"")
-                .body(new ByteArrayResource(user.getImage()));
     }
 }

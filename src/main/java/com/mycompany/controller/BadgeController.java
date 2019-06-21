@@ -6,15 +6,19 @@
 package com.mycompany.controller;
 
 import com.mycompany.bean.Badge;
-import com.mycompany.bean.Car;
 import com.mycompany.dao.BadgeDao;
 import com.mycompany.utill.Response;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,13 +36,16 @@ public class BadgeController {
     }
 
     @PostMapping("/add")
-    public Response<?> addBadge(@Param("name") String name, @Param("type") String type) {
+    public Response<?> addBadge(@Param("name") String name, @Param("type") String type, @RequestParam("image") MultipartFile image) {
         Badge badge = new Badge();
-//        badge.setImage(null);
+        try {
+            badge.setImage(image.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(BadgeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         badge.setName(name);
         badge.setType(type);
         badgeDao.save(badge);
-
         return new Response<>(true, "badge added successfully");
     }
 

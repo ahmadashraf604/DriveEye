@@ -12,18 +12,14 @@ import com.mycompany.bean.UserSeasonPK;
 import com.mycompany.dao.SeasonDao;
 import com.mycompany.dao.UserDao;
 import com.mycompany.dao.UserSeasonDao;
-import com.mycompany.dto.HomeDto;
 import com.mycompany.dto.SeasonDto;
 import com.mycompany.dto.UserSeasonDto;
 import com.mycompany.utill.Response;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -175,35 +171,6 @@ public class UserSeasonController {
     }
 
     void increaseScore(User user, Integer score) {
-        userSeasonDao.increaseScore(score, user);
-    }
-
-    @GetMapping("/seasonUsersScore/{userId}")
-    public Response<?> getSeasonUserssCORE(@PathVariable Integer userId) {
-
-//        if (userDao.existsById(userId)) {
-        List<UserSeason> scores = userSeasonDao.getScore(userId);
-        if (scores.iterator().hasNext()) {
-            UserSeason userSeason = scores.get(0);
-            HomeDto dto = new HomeDto();
-            dto.setScore(userSeason.getScore());
-//                        System.out.println(userSeason.getSeason().getEndDate());
-            dto.setDaysLeft(getDaysLeft(userSeason.getSeason().getEndDate()));
-            dto.setSeasonNUmber(userSeason.getSeason().getSeasonId());
-            dto.setUserLevel(userSeason.getUser().getLevel());
-            return new Response<>(true, dto);
-        }
-//        }
-        return new Response<>(false, "no Seasons for this user");
-
-    }
-
-    private long getDaysLeft(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        Date firstDate = date;
-        Date secondDate = new Date();
-        long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-        return diff;
+       userSeasonDao.increaseScore(score, user);
     }
 }

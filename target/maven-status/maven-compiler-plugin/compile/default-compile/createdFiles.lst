@@ -37,7 +37,6 @@ com\mycompany\dao\UserDao.class
 com\mycompany\bean\Trip.class
 com\mycompany\controller\CoachingContoller.class
 com\mycompany\controller\TripController.class
-com\mycompany\dto\HomeDto.class
 com\mycompany\dao\SeasonDao.class
 com\mycompany\dto\BadgeDto.class
 com\mycompany\controller\LeagueController.class

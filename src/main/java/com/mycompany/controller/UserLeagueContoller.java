@@ -85,7 +85,7 @@ public class UserLeagueContoller {
             }
             return new Response<>(true, leagueDtos);
         }
-        return new Response<>(false, "no subscribed league");
+        return new Response<>(true, "no subscribed league");
     }
     
     @GetMapping("getUsers/{leagueID}")
