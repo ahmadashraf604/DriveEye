@@ -104,7 +104,6 @@ public class UserSeasonBadgeController {
         System.out.println("badgeId : " + badgeId);
 
         if (userDao.existsById(userId)) {
-
             if (seasonDao.existsById(seasonId)) {
                 if (badgeDao.existsById(badgeId)) {
                     UserSeasonBadge badge = new UserSeasonBadge();
@@ -120,11 +119,9 @@ public class UserSeasonBadgeController {
                     return new Response<>(true, "Added Sucsessfuly");
                 } else {
                     System.out.println("badge not exists");
-
                 }
             } else {
                 System.out.println("season not exists");
-
             }
         } else {
             System.out.println("user not exists");

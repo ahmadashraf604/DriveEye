@@ -24,8 +24,13 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +65,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @GetMapping("/info/{id}")
     public Response<?> getUserInfo(@PathVariable int id) {
 
@@ -72,6 +78,7 @@ public class UserController {
             userDto.setLevel(user.getLevel());
             userDto.setUserId(user.getUserId());
             userDto.setEmail(user.getEmail());
+            userDto.setImage("/user/image/"+user.getUserId());
             userDto.setCar(new CarDto(user.getCarId().getCarId(), user.getCarId().getBrand(), user.getCarId().getModel()));
             userDto.setCity(new CityDto(user.getCityId().getCityId(), user.getCityId().getName()));
             Collection<UserSeasonBadge> userSeasonBadgeCollection = user.getUserSeasonBadgeCollection();
@@ -79,7 +86,7 @@ public class UserController {
             ArrayList <UserSeasonBadgeDto> badgesList = new ArrayList<UserSeasonBadgeDto>();
 
             for (UserSeasonBadge badge : userSeasonBadgeCollection) {
-                BadgeDto badgeDto = new BadgeDto(badge.getBadge().getBadgeId(),"/userBadge/image/" + badge.getBadge().getImage(),
+                BadgeDto badgeDto = new BadgeDto(badge.getBadge().getBadgeId(),"/userBadge/image/" + badge.getBadge().getBadgeId(),
                         badge.getBadge().getName(), badge.getBadge().getType());
                 badgesList.add(new UserSeasonBadgeDto(badgeDto));
             }
@@ -101,6 +108,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @PostMapping("/login")
     public Response<?> login(@Param("email") String email, @Param("password") String password) {
         User user = userDao.findUserByEmail(email, password);
@@ -112,6 +120,7 @@ public class UserController {
             userDto.setLevel(user.getLevel());
             userDto.setEmail(user.getEmail());
             userDto.setBirthdate(user.getBirthdate());
+            userDto.setImage("/user/image/"+user.getUserId());
             userDto.setCar(new CarDto(user.getCarId().getCarId()));
             userDto.setCity(new CityDto(user.getCityId().getCityId(), user.getCityId().getName()));
             return new Response<>(true, userDto);
@@ -120,6 +129,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @PostMapping("/register")
     public Response<?> register(
             @Param("email") String email,
@@ -140,7 +150,17 @@ public class UserController {
         user.setCityId(cityContoller.findCityById(cityId));
         try {
             User savedUser = userDao.save(user);
-            return new Response<>(true, savedUser);
+            UserDto userDto = new UserDto();
+            userDto.setUserId(savedUser.getUserId());
+            userDto.setFirstName(savedUser.getFirstName());
+            userDto.setLastName(savedUser.getLastName());
+            userDto.setLevel(savedUser.getLevel());
+            userDto.setEmail(savedUser.getEmail());
+            userDto.setBirthdate(savedUser.getBirthdate());
+            userDto.setImage("/user/image/"+savedUser.getUserId());
+            userDto.setCar(new CarDto(savedUser.getCarId().getCarId()));
+            userDto.setCity(new CityDto(savedUser.getCityId().getCityId(), savedUser.getCityId().getName()));
+            return new Response<>(true, userDto);
 
         } catch (javax.validation.ConstraintViolationException e) {
             List<ErrorReport> report = new ArrayList<>();
@@ -181,5 +201,15 @@ public class UserController {
 
 //        userDao.updateUser(fName, lName, email, id, Byte.MIN_VALUE, password, id);
         return new Response<>(true, "car updated sucessfully");
+    }
+    
+    @GetMapping("/image/{userId}")
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Integer userId) {
+        // Load file from database
+        User user = userDao.findById(userId).get();
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("image/jpeg"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + user.getFirstName() + "\"")
+                .body(new ByteArrayResource(user.getImage()));
     }
 }
