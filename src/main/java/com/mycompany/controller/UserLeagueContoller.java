@@ -10,6 +10,7 @@ import com.mycompany.dto.UserLeagueDto;
 import com.mycompany.utill.Response;
 import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.data.repository.query.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +33,7 @@ public class UserLeagueContoller {
     @Autowired
     UserController userController;
 
+    @Transactional
     @PostMapping("join/{userID}")
     public Response<?> subscribe(@Param("leagueCode") String leagueCode, @PathVariable int userID) {
         User user = userController.existUserById(userID);

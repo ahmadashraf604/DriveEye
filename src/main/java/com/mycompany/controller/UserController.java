@@ -196,6 +196,7 @@ public class UserController {
 
     }
 
+    @Transactional
     public User existUserById(int userId) {
         if (userDao.existsById(userId)) {
             return userDao.findById(userId).get();
