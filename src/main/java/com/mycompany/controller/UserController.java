@@ -31,9 +31,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -158,7 +160,7 @@ public class UserController {
             userDto.setEmail(savedUser.getEmail());
             userDto.setBirthdate(savedUser.getBirthdate());
             userDto.setImage("/user/image/"+savedUser.getUserId());
-            userDto.setCar(new CarDto(savedUser.getCarId().getCarId()));
+//            userDto.setCar(new CarDto(savedUser.getCarId().getCarId()));
             userDto.setCity(new CityDto(savedUser.getCityId().getCityId(), savedUser.getCityId().getName()));
             return new Response<>(true, userDto);
 
@@ -211,5 +213,12 @@ public class UserController {
                 .contentType(MediaType.parseMediaType("image/jpeg"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + user.getFirstName() + "\"")
                 .body(new ByteArrayResource(user.getImage()));
+    }
+    
+    @PutMapping("/update/{userId}")
+    public Response<?> deleteUser(@PathVariable Integer userId, @PathVariable String email) {
+        System.out.println("/delete/{userId}"+ userId);
+        userDao.updateEmail(email,userId);
+        return new Response<>(true, "update sucessfully");
     }
 }

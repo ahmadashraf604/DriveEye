@@ -44,4 +44,9 @@ public interface UserDao extends CrudRepository<User, Integer> {
     @Modifying
     @Query(value = "update User u set u.image = :image where u.id = :userId")
     public void updateImage(@Param("image") byte[] image, @Param("userId") Integer userId);
+    
+    @Transactional
+    @Modifying
+    @Query(value = "update User u set u.email = :email where u.id = :userId")
+    public void updateEmail(@Param("email") String email, @Param("userId") Integer userId);
 }

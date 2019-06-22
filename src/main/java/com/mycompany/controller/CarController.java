@@ -17,6 +17,7 @@ import java.util.Optional;
 import org.jboss.logging.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.http.RequestEntity.method;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,6 +66,7 @@ public class CarController {
 
     }
 
+    @Transactional
     @GetMapping("/add/{id}")
     public Response<?> addCar(@PathVariable Integer id, @Param String brand, @Param String model) {
         Car car = new Car();
