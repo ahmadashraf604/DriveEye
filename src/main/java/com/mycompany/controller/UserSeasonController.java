@@ -5,7 +5,6 @@
  */
 package com.mycompany.controller;
 
-import com.mycompany.bean.Season;
 import com.mycompany.bean.User;
 import com.mycompany.bean.UserSeason;
 import com.mycompany.bean.UserSeasonPK;
@@ -18,15 +17,12 @@ import com.mycompany.dto.UserSeasonDto;
 import com.mycompany.utill.Response;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

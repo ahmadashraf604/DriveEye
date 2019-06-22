@@ -20,4 +20,6 @@ public interface SeasonDao extends CrudRepository<Season,Integer> {
     @Query(name = "UserSeason.findBySeasonId")
     public Season getSeasonUsers(@Param("seasonId") Integer seasonId);
     
+    @Query(value ="select MAX(s.seasonId) from Season s")
+    public Integer getCurrentSeason();
 }

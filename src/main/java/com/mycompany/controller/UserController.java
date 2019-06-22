@@ -16,12 +16,15 @@ import com.mycompany.dto.CarDto;
 import com.mycompany.dto.CityDto;
 import com.mycompany.dto.UserDto;
 import com.mycompany.dto.UserSeasonBadgeDto;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -38,7 +41,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -53,6 +58,12 @@ public class UserController {
 
     @Autowired
     private CityContoller cityContoller;
+    
+    @Autowired
+    private SeasonController seasonController;
+    
+    @Autowired
+    private UserSeasonController userSeasonController;
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -140,7 +151,8 @@ public class UserController {
             @Param("lastName") String lastName,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @Param("birthdate") Date birthdate,
-            @Param("cityId") int cityId) {
+            @Param("cityId") int cityId,
+            @RequestParam("image") MultipartFile image) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -149,9 +161,15 @@ public class UserController {
         birthdate.setHours(22);
         user.setBirthdate(birthdate);
         user.setLevel(0);
+        try {
+            user.setImage(image.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setCityId(cityContoller.findCityById(cityId));
         try {
             User savedUser = userDao.save(user);
+            userSeasonController.addUserSeason(savedUser.getUserId(), seasonController.getCurrentSeason(), 0);
             UserDto userDto = new UserDto();
             userDto.setUserId(savedUser.getUserId());
             userDto.setFirstName(savedUser.getFirstName());
@@ -163,7 +181,6 @@ public class UserController {
 //            userDto.setCar(new CarDto(savedUser.getCarId().getCarId()));
             userDto.setCity(new CityDto(savedUser.getCityId().getCityId(), savedUser.getCityId().getName()));
             return new Response<>(true, userDto);
-
         } catch (javax.validation.ConstraintViolationException e) {
             List<ErrorReport> report = new ArrayList<>();
             for (ConstraintViolation cv : e.getConstraintViolations()) {

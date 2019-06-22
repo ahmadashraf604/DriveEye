@@ -41,6 +41,9 @@ public class SeasonController {
         seasonDao.save(season);
         return new Response<>(true, season);
         // return new Response<>(true, "Season added sucessfully");
-
+    }
+    
+    public int getCurrentSeason(){
+        return seasonDao.getCurrentSeason();
     }
 }
