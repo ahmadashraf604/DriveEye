@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "UserSeason.findBySeasonId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.seasonId = :seasonId")
     , @NamedQuery(name = "UserSeason.findBySeasonIdWithOrder", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.seasonId = :seasonId ORDER BY u.score DESC")
     , @NamedQuery(name = "UserSeason.findBySeasonIdAndUserId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userId = :userId AND u.userSeasonPK.seasonId = :seasonId")
-    , @NamedQuery(name = "UserSeason.findByUserId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userId = :userId")                                                         
+    , @NamedQuery(name = "UserSeason.getUserSeasonScore", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userId = :userId and u.userSeasonPK.seasonId = (SELECT MAX(us.userSeasonPK.seasonId) from UserSeason us)") , @NamedQuery(name = "UserSeason.findByUserId", query = "SELECT u FROM UserSeason u WHERE u.userSeasonPK.userId = :userId")                                                         
     , @NamedQuery(name = "UserSeason.findByScore", query = "SELECT u FROM UserSeason u WHERE u.score = :score")
     , @NamedQuery(name = "UserSeason.findByTripCount", query = "SELECT u FROM UserSeason u WHERE u.tripCount = :tripCount")})
 public class UserSeason implements Serializable {
