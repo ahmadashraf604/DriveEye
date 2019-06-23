@@ -42,7 +42,7 @@ public class UserSeasonController {
     private UserSeasonDao userSeasonDao;
 
     @Autowired
-    private UserDao userDao;
+    private UserController userController;
 
     @Autowired
     private SeasonDao seasonDao;
@@ -52,54 +52,39 @@ public class UserSeasonController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Response<?> addUserSeason(@Param("user_id") Integer userId, @Param("season_id") Integer seasonId,
+    public Response<?> addUserSeason(@Param("userId") Integer userId, @Param("season_id") Integer seasonId,
             @Param("score") Integer score) {
-        if (userDao.existsById(userId)) {
-
+        User user = userController.existUserById(userId);
+        if (user != null) {
             if (seasonDao.existsById(seasonId)) {
                 UserSeason userSeason = new UserSeason();
                 userSeason.setScore(score);
                 userSeason.setTripCount(0);
-                userSeason.setUser(userDao.findById(userId).get());
+                userSeason.setUser(user);
                 userSeason.setSeason(seasonDao.findById(seasonId).get());
                 UserSeasonPK pK = new UserSeasonPK();
                 pK.setSeasonId(seasonId);
                 pK.setUserId(userId);
                 userSeason.setUserSeasonPK(pK);
                 userSeasonDao.save(userSeason);
-
-                return new Response<>(true, userSeason);
-                // return new Response<>(true, "Season added sucessfully");
+//                return new Response<>(true, userSeason);
+                return new Response<>(true, "Season added sucessfully");
             }
         }
-        return new Response<>(false, "ERROR");
-
-    }
-
-    @GetMapping("/getUsers")
-    public Response<?> getUsers() {
-        Iterable<User> users = userDao.findAll();
-        if (users.iterator().hasNext()) {
-            return new Response<>(true, users);
-        } else {
-            return new Response<>(false, "users not found");
-        }
+        return new Response<>(false, "user doesn't");
 
     }
 
     @GetMapping("/getScore")
-    public Response<?> score(@Param("user_id") Integer userId, @Param("season_id") Integer seasonId) {
+    public Response<?> score(@Param("userId") Integer userId, @Param("seasonId") Integer seasonId) {
         List<UserSeason> score = userSeasonDao.getUserScore(userId, seasonId);
         if (score.iterator().hasNext()) {
 
             List<UserSeason> userSeasons = new ArrayList<>();
             for (UserSeason s : score) {
                 UserSeason us = new UserSeason();
-                //us.setSeason(s.getSeason());
                 us.setScore(s.getScore());
                 us.setTripCount(s.getTripCount());
-                //us.setUserSeasonPK(s.getUserSeasonPK());
-
                 userSeasons.add(us);
             }
 
@@ -110,13 +95,13 @@ public class UserSeasonController {
         }
 
     }
-
+    
+    @Transactional
     @GetMapping("/userSeasons/{userId}")
     public Response<?> getUserSeasons(@PathVariable("userId") Integer userId) {
 
         List<UserSeason> seasons = userSeasonDao.getUserSeasons(userId);
         if (seasons.iterator().hasNext()) {
-
             List<SeasonDto> userSeasons = new ArrayList<>();
             for (UserSeason s : seasons) {
                 List<UserSeason> seasonScores = userSeasonDao.getSeasonScoreOrderd(s.getSeason().getSeasonId());
@@ -137,9 +122,7 @@ public class UserSeasonController {
 
                 userSeasons.add(season);
             }
-
             return new Response<>(true, userSeasons);
-
         } else {
             return new Response<>(false, "no Seasons for this user");
         }

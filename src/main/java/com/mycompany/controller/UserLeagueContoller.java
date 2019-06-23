@@ -77,6 +77,7 @@ public class UserLeagueContoller {
         return new Response<>(false, "no such league with user");
     }
 
+    @Transactional
     @GetMapping("subscribed/{userID}")
     public Response<?> getSubscrubesLeague(@PathVariable int userID) {
         List<UserLeague> userLeagues = userLeagueDao.getSubscribedLeague(userID);
@@ -90,6 +91,7 @@ public class UserLeagueContoller {
         return new Response<>(false, "no subscribed league");
     }
     
+    @Transactional
     @GetMapping("getUsers/{leagueID}")
     public Response<?> getUsers(@PathVariable int leagueID) {
         League league = leagueController.isLeagueExisted(leagueID);
