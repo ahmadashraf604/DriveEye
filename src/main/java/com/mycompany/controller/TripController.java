@@ -8,7 +8,9 @@ package com.mycompany.controller;
 import com.mycompany.bean.Trip;
 import com.mycompany.bean.User;
 import com.mycompany.dao.TripDao;
+import com.mycompany.dao.UserDao;
 import com.mycompany.utill.Response;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,6 +39,9 @@ public class TripController {
 
     @Autowired
     UserSeasonController userSeasonController;
+
+    @Autowired
+    UserDao userDao;
 
     public void setTripDao(TripDao tripDao) {
         this.tripDao = tripDao;
@@ -68,6 +73,7 @@ public class TripController {
         return new Response<>(false, "no such user by having id = " + userId);
     }
 
+    @Transactional
     @PostMapping("/add")
     public Response<?> add(@Param("startPoint") String startPoint,
             @Param("endPoint") String endPoint,
@@ -87,7 +93,10 @@ public class TripController {
             if (savedTrip != null) {
                 userLeagueContoller.increaseScore(user, score);
                 userSeasonController.increaseScore(user, score);
+                userDao.updateLeve(userId, getDistance(duration));
+
                 return new Response<>(true, "add sucessfully");
+
             }
             return new Response<>(false, "add falid");
         }
@@ -116,5 +125,12 @@ public class TripController {
         randomDouble = randomDouble * 5547;
         int randomInt = (int) randomDouble;
         return randomInt;
+    }
+
+    public Integer getDistance(double duration) {
+        System.out.println("duration" + duration);
+
+        return (int) (duration * .028);
+
     }
 }

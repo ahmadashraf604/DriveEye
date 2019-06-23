@@ -24,12 +24,12 @@ public interface UserDao extends CrudRepository<User, Integer> {
 //    @Query(value = "SELECT u FROM User u where u.email = :email and u.password = :password")
     @Query(name = "User.login")
     User findUserByEmail(@Param("email") String email, @Param("password") String password);
-    
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(name = "User.updateCarInfo", nativeQuery = true)
     int updateUserCarId(@Param("userId") Integer userId, @Param("carId") Car carId);
-    
+
 //    @Transactional
 //    @Modifying
 //       @Query(value = "update User u set u.first_name = :firsNtame and,"
@@ -44,9 +44,14 @@ public interface UserDao extends CrudRepository<User, Integer> {
     @Modifying
     @Query(value = "update User u set u.image = :image where u.id = :userId")
     public void updateImage(@Param("image") byte[] image, @Param("userId") Integer userId);
-    
+
     @Transactional
     @Modifying
     @Query(value = "update User u set u.email = :email where u.id = :userId")
     public void updateEmail(@Param("email") String email, @Param("userId") Integer userId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update User u set u.level = (select us.level from User us where us.userId = :userId ) + :level where u.userId = :userId")
+    public void updateLeve(@Param("userId") Integer userId, @Param("level") Integer level);
 }
