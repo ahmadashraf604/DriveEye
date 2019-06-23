@@ -128,6 +128,7 @@ public class UserSeasonController {
         }
     }
 
+    @Transactional
     @GetMapping("/seasonUsers/{seasonId}")
     public Response<?> getSeasonUsers(@PathVariable("seasonId") Integer seasonId) {
 
