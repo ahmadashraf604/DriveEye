@@ -34,9 +34,14 @@ public interface UserSeasonDao extends CrudRepository<UserSeason, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update UserSeason ul set ul.score = (select u.score from UserSeason u where u.user = ul.user AND u.season.seasonId = (SELECT MAX(s.userSeasonPK.seasonId) FROM UserSeason s) ) + :score where ul.user = :user")
+    @Query(value = "update UserSeason userSeason set userSeason.score = (select u.score from UserSeason u where userSeason.user = u.user AND u.season = (SELECT MAX(s) FROM Season s)) + :score where userSeason.user = :user AND userSeason.season = (SELECT MAX(sl) FROM Season sl)")
     public void increaseScore(@Param("score") Integer score, @Param("user") User user);
-    
+
     @Query(name = "UserSeason.getUserSeasonScore")
     public List<UserSeason> getScore(@Param("userId") Integer userId);
+
+    @org.springframework.transaction.annotation.Transactional
+    @Modifying
+    @Query(value = "delete from UserSeason u where u.userSeasonPK.userId = :userId and u.userSeasonPK.seasonId = :seasonId")
+    public void deleteUserSeason(@Param("userId") Integer userId, @Param("seasonId") Integer seasonId);
 }

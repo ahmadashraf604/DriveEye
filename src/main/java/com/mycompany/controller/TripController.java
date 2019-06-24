@@ -94,9 +94,8 @@ public class TripController {
                 userLeagueContoller.increaseScore(user, score);
                 userSeasonController.increaseScore(user, score);
                 userDao.updateLeve(userId, getDistance(duration));
-
+                System.out.println("saved trip");
                 return new Response<>(true, "add sucessfully");
-
             }
             return new Response<>(false, "add falid");
         }
@@ -129,8 +128,7 @@ public class TripController {
 
     public Integer getDistance(double duration) {
         System.out.println("duration" + duration);
-
+        System.out.println("(duration * .028)" + (duration * .028));
         return (int) (duration * .028);
-
     }
 }

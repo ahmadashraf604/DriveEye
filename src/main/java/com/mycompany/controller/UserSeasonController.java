@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,7 +96,7 @@ public class UserSeasonController {
         }
 
     }
-    
+
     @Transactional
     @GetMapping("/userSeasons/{userId}")
     public Response<?> getUserSeasons(@PathVariable("userId") Integer userId) {
@@ -108,7 +109,8 @@ public class UserSeasonController {
                 int seasonHighScore = 0;
                 int myRank = 0;
                 if (seasonScores.size() > 0) {
-                    seasonHighScore = seasonScores.get(0).getScore();
+                    UserSeason userSeason = seasonScores.get(0);
+                    seasonHighScore = userSeason.getScore();
                     myRank = seasonScores.indexOf(s) + 1;
                 }
                 SeasonDto season = new SeasonDto(
@@ -156,7 +158,7 @@ public class UserSeasonController {
     }
 
     void increaseScore(User user, Integer score) {
-              userSeasonDao.increaseScore(score, user);
+        userSeasonDao.increaseScore(score, user);
     }
 
     @Transactional
@@ -187,5 +189,12 @@ public class UserSeasonController {
         long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
         long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         return diff;
+    }
+
+   
+    @DeleteMapping("/delete/{userId}/{seasonId}")
+    public Response<?> deleteUserSeason(@PathVariable Integer userId, @PathVariable Integer seasonId) {
+        userSeasonDao.deleteUserSeason(userId, seasonId);
+        return new Response<>(false, "no Seasons for this user");
     }
 }
